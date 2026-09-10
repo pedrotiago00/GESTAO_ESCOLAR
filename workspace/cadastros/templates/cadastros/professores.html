@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professores - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'turmas' %}">Turmas</a>
+  <a href="{% url 'disciplinas' %}">Disciplinas</a>
+  <a href="{% url 'estudantes' %}">Estudantes</a>
+  <a href="{% url 'professores' %}">Professores</a>
+  <a href="{% url 'pais' %}">Pais/Responsáveis</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Cadastros / Professores</div><h2>Professores</h2></div>
+    <button class="btn btn-primary">+ Novo Professor</button>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar professor...">
+      <select><option>Todas as áreas</option><option>Exatas</option><option>Humanas</option><option>Linguagens</option></select>
+      <button class="btn btn-primary">🔍 Filtrar</button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Matrícula</th><th>Nome</th><th>Formação</th><th>Área</th><th>Disciplinas</th><th>Carga Horária</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>P001</td><td>Maria Silva</td><td>Lic. Matemática</td><td>Exatas</td><td>Matemática</td><td>40h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>P002</td><td>João Santos</td><td>Lic. Letras</td><td>Linguagens</td><td>Português, Literatura</td><td>40h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>P003</td><td>Ana Costa</td><td>Lic. História</td><td>Humanas</td><td>História</td><td>30h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>P004</td><td>Pedro Lima</td><td>Lic. Ciências</td><td>Natureza</td><td>Ciências, Biologia</td><td>40h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>P005</td><td>Carla Mendes</td><td>Lic. Geografia</td><td>Humanas</td><td>Geografia</td><td>30h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>P006</td><td>Roberto Alves</td><td>Lic. Ed. Física</td><td>Linguagens</td><td>Ed. Física</td><td>20h</td><td><span class="badge badge-warning">Licença</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

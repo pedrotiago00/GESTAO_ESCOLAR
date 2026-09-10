@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avisos - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'avisos' %}">Avisos</a>
+  <a href="{% url 'eventos' %}">Eventos</a>
+  <a href="{% url 'reunioes' %}">Reuniões</a>
+  <a href="{% url 'reclamacoes' %}">Reclamações</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Comunicação / Avisos</div><h2>Mural de Avisos</h2></div>
+    <button class="btn btn-primary">+ Novo Aviso</button>
+  </div>
+  <div class="grid-2">
+    
+      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span class="badge badge-info">Direção</span>
+          <small style="color:#6b7280;">📅 Hoje</small>
+        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">Reunião de Pais e Mestres</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">10/09/2026 às 19h no auditório principal. Pauta: resultados do 2º bimestre.</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
+          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
+        </div>
+      </div>
+    
+      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span class="badge badge-success">Coordenação</span>
+          <small style="color:#6b7280;">📅 Hoje</small>
+        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">Feira de Ciências 2026</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">Dia 20/09 - Inscrições abertas até 15/09. Temas livres, grupos de até 5 alunos.</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
+          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
+        </div>
+      </div>
+    
+      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span class="badge badge-warning">Administração</span>
+          <small style="color:#6b7280;">📅 Hoje</small>
+        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">Manutenção da Quadra</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">A quadra esportiva ficará interditada de 12 a 15/09 para reforma do piso.</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
+          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
+        </div>
+      </div>
+    
+      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span class="badge badge-info">Biblioteca</span>
+          <small style="color:#6b7280;">📅 Hoje</small>
+        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">Novo Horário de Biblioteca</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">A partir de outubro, biblioteca funcionará das 7h às 20h de segunda a sexta.</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
+          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
+        </div>
+      </div>
+    
+      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span class="badge badge-success">Ed. Física</span>
+          <small style="color:#6b7280;">📅 Hoje</small>
+        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">Campeonato Interclasses</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">Inscrições abertas para futebol, vôlei e basquete. Início das partidas em 25/09.</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
+          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
+        </div>
+      </div>
+    
+      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span class="badge badge-danger">Coordenação</span>
+          <small style="color:#6b7280;">📅 Hoje</small>
+        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">Simulado ENEM</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">Dia 18/09 - 3º ano do EM. Presença obrigatória. Início às 8h.</p>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
+          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
+        </div>
+      </div>
+    
+  </div>
+
+</main>
+</body>
+</html>

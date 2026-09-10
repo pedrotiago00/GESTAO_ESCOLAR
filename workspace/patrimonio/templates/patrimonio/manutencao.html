@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manutenção - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'ativos' %}">Ativos</a>
+  <a href="{% url 'manutencao' %}">Manutenção</a>
+  <a href="{% url 'inventario' %}">Inventário</a>
+  <a href="{% url 'documentos' %}">Documentos</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Patrimônio / Manutenção</div><h2>Ordens de Serviço</h2></div>
+    <button class="btn btn-primary">+ Nova OS</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card red"><div class="stat-info"><h3>Abertas</h3><div class="value">12</div></div><div class="stat-icon">🔴</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Em Andamento</h3><div class="value">8</div></div><div class="stat-icon">🟠</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Concluídas (mês)</h3><div class="value">24</div></div><div class="stat-icon">🟢</div></div>
+    <div class="stat-card blue"><div class="stat-info"><h3>Custo (mês)</h3><div class="value">R$ 8.5k</div></div><div class="stat-icon">💰</div></div>
+  </div>
+  <div class="panel">
+    <div class="table-container">
+      <table>
+        <thead><tr><th>OS</th><th>Ativo</th><th>Problema</th><th>Solicitante</th><th>Prioridade</th><th>Técnico</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>#OS-2026-145</td><td>Ar Cond. Sala 201</td><td>Não liga</td><td>Maria Silva</td><td><span class="badge badge-danger">Alta</span></td><td>Técnico Refrig.</td><td><span class="badge badge-danger">Aberta</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>#OS-2026-144</td><td>Projetor Auditório</td><td>Imagem distorcida</td><td>Direção</td><td><span class="badge badge-warning">Média</span></td><td>Técnico Info.</td><td><span class="badge badge-warning">Em andamento</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>#OS-2026-143</td><td>PC Lab. 05</td><td>Sem internet</td><td>Pedro Lima</td><td><span class="badge badge-warning">Média</span></td><td>Técnico Rede</td><td><span class="badge badge-warning">Em andamento</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>#OS-2026-142</td><td>Torneira Banheiro M</td><td>Vazamento</td><td>Zeladoria</td><td><span class="badge badge-danger">Alta</span></td><td>Encanador</td><td><span class="badge badge-success">Concluída</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

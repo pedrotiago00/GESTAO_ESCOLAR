@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cobranças - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'taxas' %}">Taxas</a>
+  <a href="{% url 'cobrancas' %}">Cobranças</a>
+  <a href="{% url 'atrasos' %}">Atrasos</a>
+  <a href="{% url 'resumo' %}">Resumo Financeiro</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Financeiro / Cobranças</div><h2>Emissão de Cobranças</h2></div>
+    <div>
+      <button class="btn btn-primary">+ Nova Cobrança</button>
+      <button class="btn btn-success">📤 Emitir em Lote</button>
+    </div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card green"><div class="stat-info"><h3>Recebidas (mês)</h3><div class="value">R$ 185k</div></div><div class="stat-icon">💰</div></div>
+    <div class="stat-card blue"><div class="stat-info"><h3>A Receber</h3><div class="value">R$ 67k</div></div><div class="stat-icon">📋</div></div>
+    <div class="stat-card red"><div class="stat-info"><h3>Inadimplência</h3><div class="value">R$ 45k</div></div><div class="stat-icon">⚠️</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Boletos Emitidos</h3><div class="value">1.230</div></div><div class="stat-icon">📄</div></div>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar aluno...">
+      <select><option>Todos os meses</option><option>Setembro/2026</option><option>Outubro/2026</option></select>
+      <select><option>Todos os status</option><option>Pago</option><option>Pendente</option><option>Atrasado</option></select>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Boleto</th><th>Aluno</th><th>Descrição</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>#BLT-2026-0001</td><td>Ana Beatriz Oliveira</td><td>Mensalidade Set/2026</td><td>10/09/2026</td><td>R$ 850,00</td><td><span class="badge badge-success">Pago</span></td><td><button class="btn btn-sm btn-primary">📄</button></td></tr>
+          <tr><td>#BLT-2026-0002</td><td>Bruno Carvalho Silva</td><td>Mensalidade Set/2026</td><td>10/09/2026</td><td>R$ 850,00</td><td><span class="badge badge-warning">Pendente</span></td><td><button class="btn btn-sm btn-primary">📄</button> <button class="btn btn-sm btn-warning">📧</button></td></tr>
+          <tr><td>#BLT-2026-0003</td><td>Carla Mendes Souza</td><td>Mensalidade Set/2026</td><td>10/09/2026</td><td>R$ 850,00</td><td><span class="badge badge-success">Pago</span></td><td><button class="btn btn-sm btn-primary">📄</button></td></tr>
+          <tr><td>#BLT-2026-0004</td><td>Daniel Pereira Lima</td><td>Mensalidade Set/2026</td><td>10/09/2026</td><td>R$ 850,00</td><td><span class="badge badge-danger">Atrasado</span></td><td><button class="btn btn-sm btn-primary">📄</button> <button class="btn btn-sm btn-danger">📧</button></td></tr>
+          <tr><td>#BLT-2026-0005</td><td>Eduarda Santos Costa</td><td>Mensalidade Set/2026</td><td>10/09/2026</td><td>R$ 850,00</td><td><span class="badge badge-success">Pago</span></td><td><button class="btn btn-sm btn-primary">📄</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

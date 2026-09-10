@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Permissões - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'usuarios' %}">Usuários</a>
+  <a href="{% url 'permissoes' %}">Permissões</a>
+  <a href="{% url 'kpis' %}">KPIs</a>
+  <a href="{% url 'relatorios' %}">Relatórios</a>
+  <a href="{% url 'configuracoes' %}">Configurações</a>
+  <a href="{% url 'perfil' %}">Meu Perfil</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Sistema / Permissões</div><h2>Perfis e Permissões</h2></div>
+    <button class="btn btn-primary">+ Novo Perfil</button>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>🔑 Perfis de Acesso</h3></div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Perfil</th><th>Descrição</th><th>Usuários</th><th>Módulos</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Administrador</strong></td><td>Acesso total ao sistema</td><td>5</td><td>Todos (15)</td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td><strong>Professor</strong></td><td>Acesso a módulos pedagógicos</td><td>89</td><td>Acadêmico, Diário, Frequência, Notas</td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td><strong>Coordenador</strong></td><td>Supervisão pedagógica</td><td>8</td><td>Acadêmico, Cadastros, Comunicação</td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td><strong>Financeiro</strong></td><td>Gestão financeira</td><td>4</td><td>Financeiro, Cadastros (leitura)</td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td><strong>Secretaria</strong></td><td>Atendimento e cadastros</td><td>6</td><td>Cadastros, Comunicação</td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td><strong>Direção</strong></td><td>Visão gerencial completa</td><td>3</td><td>Todos (leitura) + Relatórios</td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>📋 Matriz de Permissões - Administrador</h3></div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Módulo</th><th>Visualizar</th><th>Criar</th><th>Editar</th><th>Excluir</th></tr></thead>
+        <tbody>
+          <tr><td>Dashboard</td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>Acadêmico</td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr><td>Cadastros</td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr><td>Financeiro</td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr><td>Sistema</td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td><td><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

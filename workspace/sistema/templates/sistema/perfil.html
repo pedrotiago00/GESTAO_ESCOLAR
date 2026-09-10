@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Perfil - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'usuarios' %}">Usuários</a>
+  <a href="{% url 'permissoes' %}">Permissões</a>
+  <a href="{% url 'kpis' %}">KPIs</a>
+  <a href="{% url 'relatorios' %}">Relatórios</a>
+  <a href="{% url 'configuracoes' %}">Configurações</a>
+  <a href="{% url 'perfil' %}">Meu Perfil</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Usuário / Perfil</div><h2>Meu Perfil</h2></div>
+  </div>
+  <div class="panel">
+    <div style="display:flex; align-items:center; gap:25px; margin-bottom:30px; flex-wrap:wrap;">
+      <div style="width:120px; height:120px; border-radius:50%; background:linear-gradient(135deg,#3b82f6,#8b5cf6); color:white; display:flex; align-items:center; justify-content:center; font-size:48px; font-weight:bold;">AD</div>
+      <div>
+        <h2 style="color:#1e3a8a; margin-bottom:5px;">Administrador do Sistema</h2>
+        <p style="color:#6b7280; margin-bottom:10px;">admin@escola.com</p>
+        <span class="badge badge-danger">Administrador</span>
+        <span class="badge badge-success" style="margin-left:5px;">Ativo</span>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Nome Completo</label><input type="text" value="Administrador do Sistema"></div>
+      <div class="form-group"><label>Email</label><input type="email" value="admin@escola.com"></div>
+      <div class="form-group"><label>Telefone</label><input type="text" value="(11) 99999-9999"></div>
+      <div class="form-group"><label>CPF</label><input type="text" value="000.000.000-00"></div>
+      <div class="form-group"><label>Cargo</label><input type="text" value="Administrador Geral"></div>
+      <div class="form-group"><label>Departamento</label><input type="text" value="TI"></div>
+    </div>
+    <button class="btn btn-success">💾 Salvar Alterações</button>
+  </div>
+  <div class="panel">
+    <h3 style="margin-bottom:20px; color:#1e3a8a;">🔐 Alterar Senha</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>Senha Atual</label><input type="password"></div>
+      <div class="form-group"><label>Nova Senha</label><input type="password"></div>
+      <div class="form-group"><label>Confirmar Nova Senha</label><input type="password"></div>
+    </div>
+    <button class="btn btn-warning">🔑 Alterar Senha</button>
+  </div>
+
+</main>
+</body>
+</html>

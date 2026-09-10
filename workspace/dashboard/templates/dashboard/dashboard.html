@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="dashboard.html">Dashboard</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div>
+      <div class="breadcrumb">Início / Dashboard</div>
+      <h2>Visão Geral</h2>
+    </div>
+    <div>
+      <button class="btn btn-primary">📥 Exportar Relatório</button>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-info">
+        <h3>Total de Alunos</h3>
+        <div class="value">1.247</div>
+        <div class="change up">↑ 5.2% este mês</div>
+      </div>
+      <div class="stat-icon">👨‍🎓</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-info">
+        <h3>Professores Ativos</h3>
+        <div class="value">89</div>
+        <div class="change up">↑ 2 novos</div>
+      </div>
+      <div class="stat-icon">👨‍🏫</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-info">
+        <h3>Turmas Ativas</h3>
+        <div class="value">42</div>
+        <div class="change up">↑ 3 este semestre</div>
+      </div>
+      <div class="stat-icon">🏫</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-info">
+        <h3>Inadimplência</h3>
+        <div class="value">R$ 45.2k</div>
+        <div class="change down">↓ 2.1% este mês</div>
+      </div>
+      <div class="stat-icon">💸</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-info">
+        <h3>Frequência Média</h3>
+        <div class="value">92.4%</div>
+        <div class="change up">↑ 1.8%</div>
+      </div>
+      <div class="stat-icon">📊</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><h3>📈 Desempenho Acadêmico por Mês</h3></div>
+      <div class="chart-bar">
+        <div class="bar" style="height: 60%" data-value="60%"></div>
+        <div class="bar" style="height: 75%" data-value="75%"></div>
+        <div class="bar" style="height: 68%" data-value="68%"></div>
+        <div class="bar" style="height: 82%" data-value="82%"></div>
+        <div class="bar" style="height: 78%" data-value="78%"></div>
+        <div class="bar" style="height: 88%" data-value="88%"></div>
+        <div class="bar" style="height: 92%" data-value="92%"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><h3>🎯 Próximos Eventos</h3></div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h4>Reunião de Pais</h4>
+          <p>Auditório principal - 19h</p>
+          <div class="time">📅 10/09/2026</div>
+        </div>
+        <div class="timeline-item">
+          <h4>Prova de Matemática - 9º ano</h4>
+          <p>Conteúdo: Equações de 2º grau</p>
+          <div class="time">📅 12/09/2026</div>
+        </div>
+        <div class="timeline-item">
+          <h4>Feira de Ciências</h4>
+          <p>Pátio central - Dia inteiro</p>
+          <div class="time">📅 20/09/2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h3>🔔 Atividades Recentes</h3>
+      <button class="btn btn-sm btn-secondary">Ver todas</button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Usuário</th><th>Ação</th><th>Local</th><th>Data/Hora</th></tr></thead>
+        <tbody>
+          <tr><td>Maria Silva</td><td>Matriculou aluno</td><td>Estudantes</td><td>08/09/2026 14:32</td></tr>
+          <tr><td>João Santos</td><td>Lançou notas</td><td>Notas - 8º A</td><td>08/09/2026 13:15</td></tr>
+          <tr><td>Ana Costa</td><td>Emitiu boleto</td><td>Cobranças</td><td>08/09/2026 11:48</td></tr>
+          <tr><td>Pedro Lima</td><td>Registrou frequência</td><td>Frequência - 7º B</td><td>08/09/2026 10:22</td></tr>
+          <tr><td>Carla Mendes</td><td>Criou aviso</td><td>Comunicação</td><td>08/09/2026 09:05</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

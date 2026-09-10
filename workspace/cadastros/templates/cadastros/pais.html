@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pais/Responsáveis - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'turmas' %}">Turmas</a>
+  <a href="{% url 'disciplinas' %}">Disciplinas</a>
+  <a href="{% url 'estudantes' %}">Estudantes</a>
+  <a href="{% url 'professores' %}">Professores</a>
+  <a href="{% url 'pais' %}">Pais/Responsáveis</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Cadastros / Pais/Responsáveis</div><h2>Pais e Responsáveis</h2></div>
+    <button class="btn btn-primary">+ Novo Responsável</button>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar por nome, CPF ou telefone...">
+      <button class="btn btn-primary">🔍 Buscar</button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>CPF</th><th>Nome</th><th>Parentesco</th><th>Aluno(s)</th><th>Telefone</th><th>Email</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>123.456.789-00</td><td>Maria Oliveira</td><td>Mãe</td><td>Ana Beatriz (9º A)</td><td>(11) 98765-4321</td><td>maria@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>234.567.890-11</td><td>Carlos Silva</td><td>Pai</td><td>Bruno (9º A)</td><td>(11) 91234-5678</td><td>carlos@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>345.678.901-22</td><td>Juliana Souza</td><td>Mãe</td><td>Carla (9º A)</td><td>(11) 99876-5432</td><td>juliana@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>456.789.012-33</td><td>Roberto Lima</td><td>Pai</td><td>Daniel (9º B)</td><td>(11) 93456-7890</td><td>roberto@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

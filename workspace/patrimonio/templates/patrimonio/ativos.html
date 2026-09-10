@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ativos - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'ativos' %}">Ativos</a>
+  <a href="{% url 'manutencao' %}">Manutenção</a>
+  <a href="{% url 'inventario' %}">Inventário</a>
+  <a href="{% url 'documentos' %}">Documentos</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Patrimônio / Ativos</div><h2>Ativos Patrimoniais</h2></div>
+    <button class="btn btn-primary">+ Novo Ativo</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card blue"><div class="stat-info"><h3>Total de Ativos</h3><div class="value">1.847</div></div><div class="stat-icon">📦</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Valor Total</h3><div class="value">R$ 2.3M</div></div><div class="stat-icon">💰</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Em Manutenção</h3><div class="value">23</div></div><div class="stat-icon">🔧</div></div>
+    <div class="stat-card red"><div class="stat-info"><h3>Obsoletos</h3><div class="value">45</div></div><div class="stat-icon">🗑️</div></div>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar ativo por nome, código ou local...">
+      <select><option>Todas as categorias</option><option>Mobiliário</option><option>Informática</option><option>Equipamentos</option></select>
+      <button class="btn btn-primary">🔍 Buscar</button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Código</th><th>Descrição</th><th>Categoria</th><th>Local</th><th>Aquisição</th><th>Valor</th><th>Estado</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>PAT-0001</td><td>Mesa professor carvalho</td><td>Mobiliário</td><td>Sala 101</td><td>2020</td><td>R$ 450,00</td><td><span class="badge badge-success">Bom</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>PAT-0002</td><td>Notebook Dell i5</td><td>Informática</td><td>Lab. Info</td><td>2022</td><td>R$ 3.500,00</td><td><span class="badge badge-success">Bom</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>PAT-0003</td><td>Projetor Epson</td><td>Equipamentos</td><td>Auditório</td><td>2021</td><td>R$ 2.800,00</td><td><span class="badge badge-warning">Regular</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>PAT-0004</td><td>Ar Condicionado 18k</td><td>Equipamentos</td><td>Sala 201</td><td>2019</td><td>R$ 2.200,00</td><td><span class="badge badge-danger">Manutenção</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

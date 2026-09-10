@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disciplinas - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'turmas' %}">Turmas</a>
+  <a href="{% url 'disciplinas' %}">Disciplinas</a>
+  <a href="{% url 'estudantes' %}">Estudantes</a>
+  <a href="{% url 'professores' %}">Professores</a>
+  <a href="{% url 'pais' %}">Pais/Responsáveis</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Cadastros / Disciplinas</div><h2>Disciplinas</h2></div>
+    <button class="btn btn-primary">+ Nova Disciplina</button>
+  </div>
+  <div class="panel">
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Código</th><th>Nome</th><th>Área</th><th>Carga Horária</th><th>Professores</th><th>Turmas</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>D001</td><td>Matemática</td><td>Exatas</td><td>4h/semana</td><td>3</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D002</td><td>Português</td><td>Linguagens</td><td>4h/semana</td><td>4</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D003</td><td>História</td><td>Humanas</td><td>3h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D004</td><td>Geografia</td><td>Humanas</td><td>2h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D005</td><td>Ciências</td><td>Natureza</td><td>3h/semana</td><td>3</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D006</td><td>Ed. Física</td><td>Linguagens</td><td>2h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D007</td><td>Artes</td><td>Linguagens</td><td>2h/semana</td><td>1</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>D008</td><td>Inglês</td><td>Linguagens</td><td>2h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

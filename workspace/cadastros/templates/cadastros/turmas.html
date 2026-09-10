@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turmas - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'turmas' %}">Turmas</a>
+  <a href="{% url 'disciplinas' %}">Disciplinas</a>
+  <a href="{% url 'estudantes' %}">Estudantes</a>
+  <a href="{% url 'professores' %}">Professores</a>
+  <a href="{% url 'pais' %}">Pais/Responsáveis</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Cadastros / Turmas</div><h2>Gestão de Turmas</h2></div>
+    <button class="btn btn-primary">+ Nova Turma</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card blue"><div class="stat-info"><h3>Total de Turmas</h3><div class="value">42</div></div><div class="stat-icon">🏫</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Alunos Matriculados</h3><div class="value">1.247</div></div><div class="stat-icon">👨‍🎓</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Média por Turma</h3><div class="value">29.7</div></div><div class="stat-icon">📊</div></div>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar turma...">
+      <select><option>Todos os anos</option><option>1º Ano</option><option>2º Ano</option><option>9º Ano</option></select>
+      <select><option>Todos os turnos</option><option>Matutino</option><option>Vespertino</option><option>Noturno</option></select>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Código</th><th>Nome</th><th>Ano</th><th>Turno</th><th>Alunos</th><th>Sala</th><th>Professor Regente</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>T001</td><td>9º Ano A</td><td>9º</td><td>Matutino</td><td>32</td><td>101</td><td>Maria Silva</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>T002</td><td>9º Ano B</td><td>9º</td><td>Matutino</td><td>30</td><td>102</td><td>João Santos</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>T003</td><td>8º Ano A</td><td>8º</td><td>Matutino</td><td>28</td><td>201</td><td>Ana Costa</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>T004</td><td>8º Ano B</td><td>8º</td><td>Vespertino</td><td>31</td><td>202</td><td>Pedro Lima</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>T005</td><td>7º Ano A</td><td>7º</td><td>Matutino</td><td>29</td><td>301</td><td>Carla Mendes</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

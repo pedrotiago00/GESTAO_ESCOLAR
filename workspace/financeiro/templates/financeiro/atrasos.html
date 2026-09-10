@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atrasos - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'taxas' %}">Taxas</a>
+  <a href="{% url 'cobrancas' %}">Cobranças</a>
+  <a href="{% url 'atrasos' %}">Atrasos</a>
+  <a href="{% url 'resumo' %}">Resumo Financeiro</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Financeiro / Atrasos</div><h2>Cobranças em Atraso</h2></div>
+    <button class="btn btn-warning">📧 Notificar Todos</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card red"><div class="stat-info"><h3>Total em Atraso</h3><div class="value">R$ 45.230,00</div></div><div class="stat-icon">💸</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Alunos Inadimplentes</h3><div class="value">17</div></div><div class="stat-icon">⚠️</div></div>
+    <div class="stat-card blue"><div class="stat-info"><h3>Boletos Vencidos</h3><div class="value">23</div></div><div class="stat-icon">📄</div></div>
+    <div class="stat-card purple"><div class="stat-info"><h3>Maior Atraso</h3><div class="value">90 dias</div></div><div class="stat-icon">📅</div></div>
+  </div>
+  <div class="panel">
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Aluno</th><th>Turma</th><th>Qtd. Boletos</th><th>Valor Total</th><th>Maior Atraso</th><th>Responsável</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>Daniel Pereira Lima</td><td>9º B</td><td>3</td><td>R$ 2.550,00</td><td>90 dias</td><td>Roberto Lima</td><td><button class="btn btn-sm btn-warning">📧 Notificar</button> <button class="btn btn-sm btn-primary">💳 Negociar</button></td></tr>
+          <tr><td>Felipe Rocha Alves</td><td>9º A</td><td>2</td><td>R$ 1.700,00</td><td>60 dias</td><td>Marisa Alves</td><td><button class="btn btn-sm btn-warning">📧 Notificar</button> <button class="btn btn-sm btn-primary">💳 Negociar</button></td></tr>
+          <tr><td>Gabriela Martins</td><td>8º A</td><td>1</td><td>R$ 850,00</td><td>30 dias</td><td>Paulo Martins</td><td><button class="btn btn-sm btn-warning">📧 Notificar</button> <button class="btn btn-sm btn-primary">💳 Negociar</button></td></tr>
+          <tr><td>Henrique Nunes</td><td>7º C</td><td>2</td><td>R$ 1.700,00</td><td>45 dias</td><td>Sandra Nunes</td><td><button class="btn btn-sm btn-warning">📧 Notificar</button> <button class="btn btn-sm btn-primary">💳 Negociar</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

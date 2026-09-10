@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrativo - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<main class="folder-index">
+  <h2>Administrativo</h2>
+  <ul>
+    <li><a href="{% url 'admissoes' %}">Admissões</a></li>
+    <li><a href="{% url 'condutas' %}">Conduta</a></li>
+    <li><a href="{% url 'extracurriculares' %}">Extracurriculares</a></li>
+    <li><a href="{% url 'substitutos' %}">Substitutos</a></li>
+  </ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reclamações - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'avisos' %}">Avisos</a>
+  <a href="{% url 'eventos' %}">Eventos</a>
+  <a href="{% url 'reunioes' %}">Reuniões</a>
+  <a href="{% url 'reclamacoes' %}">Reclamações</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Comunicação / Reclamações</div><h2>Reclamações e Sugestões</h2></div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card red"><div class="stat-info"><h3>Abertas</h3><div class="value">8</div></div><div class="stat-icon">📬</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Em Análise</h3><div class="value">5</div></div><div class="stat-icon">🔍</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Resolvidas (mês)</h3><div class="value">23</div></div><div class="stat-icon">✅</div></div>
+    <div class="stat-card blue"><div class="stat-info"><h3>Tempo Médio</h3><div class="value">2.3 dias</div></div><div class="stat-icon">⏱️</div></div>
+  </div>
+  <div class="panel">
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Protocolo</th><th>Data</th><th>Autor</th><th>Categoria</th><th>Assunto</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>#REC-2026-045</td><td>08/09/2026</td><td>Maria Oliveira</td><td>Infraestrutura</td><td>Ar condicionado da sala 101</td><td><span class="badge badge-danger">Aberta</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-success">✓ Resolver</button></td></tr>
+          <tr><td>#REC-2026-044</td><td>07/09/2026</td><td>Carlos Silva</td><td>Pedagógico</td><td>Dificuldade em matemática</td><td><span class="badge badge-warning">Em análise</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>#REC-2026-043</td><td>06/09/2026</td><td>Anônimo</td><td>Alimentação</td><td>Qualidade da merenda</td><td><span class="badge badge-warning">Em análise</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>#REC-2026-042</td><td>05/09/2026</td><td>Juliana Souza</td><td>Comunicação</td><td>Avisos não recebidos</td><td><span class="badge badge-success">Resolvida</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

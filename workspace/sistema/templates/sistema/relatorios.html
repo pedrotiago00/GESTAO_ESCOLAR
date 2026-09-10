@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatórios - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'usuarios' %}">Usuários</a>
+  <a href="{% url 'permissoes' %}">Permissões</a>
+  <a href="{% url 'kpis' %}">KPIs</a>
+  <a href="{% url 'relatorios' %}">Relatórios</a>
+  <a href="{% url 'configuracoes' %}">Configurações</a>
+  <a href="{% url 'perfil' %}">Meu Perfil</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Sistema / Relatórios</div><h2>Relatórios</h2></div>
+  </div>
+  <div class="grid-3">
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">👨‍🎓</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Relatório de Alunos</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Lista completa de alunos matriculados</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">📊</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Boletim Escolar</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Notas e frequência por aluno</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">💰</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Relatório Financeiro</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Receitas, despesas e inadimplência</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">📅</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Frequência Mensal</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Análise de frequência por turma</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">📈</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Desempenho Acadêmico</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Médias e aprovações por disciplina</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">👨‍🏫</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Relatório de Professores</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Carga horária e avaliações</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">📝</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Atas de Reunião</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Documentos oficiais de reuniões</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">📦</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Inventário Patrimonial</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Lista de bens patrimoniais</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">⚠️</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Relatório de Conduta</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Ocorrências disciplinares</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">🎯</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Extracurriculares</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Participação em atividades</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">📊</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Indicadores (KPIs)</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Indicadores de desempenho</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+      <div class="panel" style="cursor:pointer; transition:all 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <div style="text-align:center; font-size:48px; margin-bottom:15px;">⚙️</div>
+        <h3 style="text-align:center; margin-bottom:10px; color:#1e3a8a;">Personalizado</h3>
+        <p style="text-align:center; color:#6b7280; font-size:14px; margin-bottom:15px;">Gere relatórios customizados</p>
+        <button class="btn btn-primary" style="width:100%;">📥 Gerar Relatório</button>
+      </div>
+    
+  </div>
+
+</main>
+</body>
+</html>

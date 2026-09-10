@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudantes - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'turmas' %}">Turmas</a>
+  <a href="{% url 'disciplinas' %}">Disciplinas</a>
+  <a href="{% url 'estudantes' %}">Estudantes</a>
+  <a href="{% url 'professores' %}">Professores</a>
+  <a href="{% url 'pais' %}">Pais/Responsáveis</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Cadastros / Estudantes</div><h2>Estudantes</h2></div>
+    <button class="btn btn-primary">+ Novo Estudante</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card blue"><div class="stat-info"><h3>Total</h3><div class="value">1.247</div></div><div class="stat-icon">👨‍🎓</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Ativos</h3><div class="value">1.198</div></div><div class="stat-icon">✅</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Transferidos</h3><div class="value">32</div></div><div class="stat-icon">🔄</div></div>
+    <div class="stat-card red"><div class="stat-info"><h3>Inadimplentes</h3><div class="value">17</div></div><div class="stat-icon">⚠️</div></div>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar por nome, matrícula ou CPF...">
+      <select><option>Todas as turmas</option><option>9º A</option><option>9º B</option><option>8º A</option></select>
+      <select><option>Todos os status</option><option>Ativo</option><option>Inativo</option><option>Transferido</option></select>
+      <button class="btn btn-primary">🔍 Filtrar</button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Matrícula</th><th>Nome</th><th>Turma</th><th>Data Nasc.</th><th>Responsável</th><th>Telefone</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>2026001</td><td>Ana Beatriz Oliveira</td><td>9º A</td><td>15/03/2011</td><td>Maria Oliveira</td><td>(11) 98765-4321</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>2026002</td><td>Bruno Carvalho Silva</td><td>9º A</td><td>22/07/2011</td><td>Carlos Silva</td><td>(11) 91234-5678</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>2026003</td><td>Carla Mendes Souza</td><td>9º A</td><td>08/11/2011</td><td>Juliana Souza</td><td>(11) 99876-5432</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>2026004</td><td>Daniel Pereira Lima</td><td>9º B</td><td>30/05/2011</td><td>Roberto Lima</td><td>(11) 93456-7890</td><td><span class="badge badge-warning">Pendência</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>2026005</td><td>Eduarda Santos Costa</td><td>8º A</td><td>12/09/2012</td><td>Fernanda Costa</td><td>(11) 97654-3210</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

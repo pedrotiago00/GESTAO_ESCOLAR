@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<main class="folder-index">
+  <h2>Sistema</h2>
+  <ul>
+    <li><a href="{% url 'usuarios' %}">Usuários</a></li>
+    <li><a href="{% url 'permissoes' %}">Permissões</a></li>
+    <li><a href="{% url 'kpis' %}">KPIs</a></li>
+    <li><a href="{% url 'relatorios' %}">Relatórios</a></li>
+    <li><a href="{% url 'configuracoes' %}">Configurações</a></li>
+    <li><a href="{% url 'perfil' %}">Meu Perfil</a></li>
+  </ul>
+</main>
+</body>
+</html>

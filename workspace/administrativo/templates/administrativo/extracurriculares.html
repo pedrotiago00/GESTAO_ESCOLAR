@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extracurriculares - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'admissoes' %}">Admissões</a>
+  <a href="{% url 'condutas' %}">Conduta</a>
+  <a href="{% url 'extracurriculares' %}">Extracurriculares</a>
+  <a href="{% url 'substitutos' %}">Substitutos</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Administrativo / Extracurriculares</div><h2>Atividades Extracurriculares</h2></div>
+    <button class="btn btn-primary">+ Nova Atividade</button>
+  </div>
+  <div class="grid-3">
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">⚽</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Futebol</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Ter/Qui 16h-17h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 80/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>45/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">🏐</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Vôlei</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Seg/Qua 16h-17h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 80/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>28/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:56%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">🤖</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Robótica</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Sex 14h-16h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 120/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>22/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:44%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">🎭</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Teatro</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Ter 14h-16h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 90/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>18/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:36%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">🎵</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Música</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Qua 14h-16h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 100/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>35/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:70%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">♟️</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Xadrez</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Sex 16h-17h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 Gratuito</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>15/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:30%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">💃</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Dança</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Seg/Qua 17h-18h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 90/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>30/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:60%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">💻</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Informática</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Qui 14h-16h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 110/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>25/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+      <div class="panel">
+        <div style="text-align:center; font-size:48px; margin-bottom:10px;">🎨</div>
+        <h3 style="text-align:center; margin-bottom:10px;">Arte</h3>
+        <p style="text-align:center; color:#6b7280; margin-bottom:5px;">📅 Sex 14h-16h</p>
+        <p style="text-align:center; color:#6b7280; margin-bottom:15px;">💰 R$ 85/mês</p>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Alunos inscritos</span><strong>20/50</strong></div>
+          <div class="progress"><div class="progress-bar" style="width:40%"></div></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;">Ver Detalhes</button>
+      </div>
+    
+  </div>
+
+</main>
+</body>
+</html>

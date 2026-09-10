@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentos - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'ativos' %}">Ativos</a>
+  <a href="{% url 'manutencao' %}">Manutenção</a>
+  <a href="{% url 'inventario' %}">Inventário</a>
+  <a href="{% url 'documentos' %}">Documentos</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Patrimônio / Documentos</div><h2>Gestão de Documentos</h2></div>
+    <button class="btn btn-primary">📤 Enviar Documento</button>
+  </div>
+  <div class="panel">
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Buscar documento...">
+      <select><option>Todas as categorias</option><option>Atas</option><option>Regulamentos</option><option>Contratos</option><option>Relatórios</option></select>
+      <button class="btn btn-primary">🔍 Buscar</button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Nome</th><th>Categoria</th><th>Tamanho</th><th>Enviado por</th><th>Data</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>📄 Regimento Escolar 2026.pdf</td><td>Regulamentos</td><td>2.4 MB</td><td>Direção</td><td>15/01/2026</td><td><button class="btn btn-sm btn-primary">📥</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>📄 PPP - Projeto Político Pedagógico.pdf</td><td>Regulamentos</td><td>5.1 MB</td><td>Coordenação</td><td>10/02/2026</td><td><button class="btn btn-sm btn-primary">📥</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>📄 Ata Reunião Pais 01-09.pdf</td><td>Atas</td><td>450 KB</td><td>Secretaria</td><td>02/09/2026</td><td><button class="btn btn-sm btn-primary">📥</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>📊 Relatório Mensal Agosto.xlsx</td><td>Relatórios</td><td>1.2 MB</td><td>Financeiro</td><td>05/09/2026</td><td><button class="btn btn-sm btn-primary">📥</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          <tr><td>📄 Contrato Merendeira.pdf</td><td>Contratos</td><td>890 KB</td><td>Administrativo</td><td>20/08/2026</td><td><button class="btn btn-sm btn-primary">📥</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

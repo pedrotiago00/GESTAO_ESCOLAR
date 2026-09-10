@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reuniões - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'avisos' %}">Avisos</a>
+  <a href="{% url 'eventos' %}">Eventos</a>
+  <a href="{% url 'reunioes' %}">Reuniões</a>
+  <a href="{% url 'reclamacoes' %}">Reclamações</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Comunicação / Reuniões</div><h2>Reuniões</h2></div>
+    <button class="btn btn-primary">+ Agendar Reunião</button>
+  </div>
+  <div class="panel">
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Data/Hora</th><th>Título</th><th>Tipo</th><th>Local</th><th>Participantes</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>10/09/2026 19:00</td><td>Reunião de Pais</td><td>Pais/Professores</td><td>Auditório</td><td>350</td><td><span class="badge badge-warning">Agendada</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>10/09/2026 14:00</td><td>Conselho de Classe</td><td>Pedagógica</td><td>Sala Prof.</td><td>89</td><td><span class="badge badge-warning">Agendada</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>15/09/2026 10:00</td><td>Reunião Pedagógica</td><td>Pedagógica</td><td>Sala Prof.</td><td>89</td><td><span class="badge badge-info">Planejada</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>05/09/2026 15:00</td><td>Reunião Administrativa</td><td>Administrativa</td><td>Diretoria</td><td>12</td><td><span class="badge badge-success">Realizada</span></td><td><button class="btn btn-sm btn-primary">📄 Ata</button></td></tr>
+          <tr><td>01/09/2026 19:00</td><td>Reunião de Pais - 9º ano</td><td>Pais/Professores</td><td>Auditório</td><td>120</td><td><span class="badge badge-success">Realizada</span></td><td><button class="btn btn-sm btn-primary">📄 Ata</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
