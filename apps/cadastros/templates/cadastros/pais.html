@@ -22,7 +22,43 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Cadastros / Pais/Responsáveis</div><h2>Pais e Responsáveis</h2></div>
-    <button class="btn btn-primary">+ Novo Responsável</button>
+    <button type="button" class="btn btn-primary" id="open-responsavel-modal">+ Novo Responsável</button>
+  </div>
+
+  <div class="modal" id="responsavel-modal" role="dialog" aria-modal="true" aria-labelledby="responsavel-modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="responsavel-modal-title">Cadastrar novo responsável</h3>
+        <button type="button" class="modal-close" id="close-responsavel-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form method="post" class="turma-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input id="cpf" type="text" name="cpf" placeholder="000.000.000-00" required>
+        </div>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" name="nome" placeholder="Nome completo" required>
+        </div>
+        <div class="form-group">
+          <label for="parentesco">Parentesco</label>
+          <input id="parentesco" type="text" name="parentesco" placeholder="Ex.: Mãe, Pai ou Avó" required>
+        </div>
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input id="telefone" type="tel" name="telefone" placeholder="(00) 00000-0000" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" name="email" placeholder="nome@email.com" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-responsavel-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar responsável</button>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="panel">
     <div class="search-bar">
@@ -33,15 +69,51 @@
       <table>
         <thead><tr><th>CPF</th><th>Nome</th><th>Parentesco</th><th>Aluno(s)</th><th>Telefone</th><th>Email</th><th>Ações</th></tr></thead>
         <tbody>
-          <tr><td>123.456.789-00</td><td>Maria Oliveira</td><td>Mãe</td><td>Ana Beatriz (9º A)</td><td>(11) 98765-4321</td><td>maria@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>234.567.890-11</td><td>Carlos Silva</td><td>Pai</td><td>Bruno (9º A)</td><td>(11) 91234-5678</td><td>carlos@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>345.678.901-22</td><td>Juliana Souza</td><td>Mãe</td><td>Carla (9º A)</td><td>(11) 99876-5432</td><td>juliana@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>456.789.012-33</td><td>Roberto Lima</td><td>Pai</td><td>Daniel (9º B)</td><td>(11) 93456-7890</td><td>roberto@email.com</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          {% for responsavel in responsaveis %}
+          <tr>
+            <td>{{ responsavel.cpf }}</td>
+            <td>{{ responsavel.nome }}</td>
+            <td>{{ responsavel.parentesco }}</td>
+            <td>
+              {% for estudante in responsavel.estudantes.all %}
+                {{ estudante.nome }} ({{ estudante.turma.serie }}){% if not forloop.last %}, {% endif %}
+              {% empty %}
+                Nenhum estudante vinculado
+              {% endfor %}
+            </td>
+            <td>{{ responsavel.telefone }}</td>
+            <td>{{ responsavel.email }}</td>
+            <td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="7">Nenhum responsável cadastrado.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<script>
+  const responsavelModal = document.getElementById('responsavel-modal');
+  const openResponsavelModal = document.getElementById('open-responsavel-modal');
+  const closeResponsavelModal = document.getElementById('close-responsavel-modal');
+  const cancelResponsavelModal = document.getElementById('cancel-responsavel-modal');
+
+  function toggleResponsavelModal(show) {
+    responsavelModal.classList.toggle('show', show);
+    if (show) document.getElementById('cpf').focus();
+  }
+
+  openResponsavelModal.addEventListener('click', () => toggleResponsavelModal(true));
+  closeResponsavelModal.addEventListener('click', () => toggleResponsavelModal(false));
+  cancelResponsavelModal.addEventListener('click', () => toggleResponsavelModal(false));
+  responsavelModal.addEventListener('click', (event) => {
+    if (event.target === responsavelModal) toggleResponsavelModal(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') toggleResponsavelModal(false);
+  });
+</script>
 </body>
 </html>

@@ -22,7 +22,49 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Cadastros / Turmas</div><h2>Gestão de Turmas</h2></div>
-    <button class="btn btn-primary">+ Nova Turma</button>
+    <button type="button" class="btn btn-primary" id="open-turma-modal">+ Nova Turma</button>
+  </div>
+
+  <div class="modal" id="turma-modal" role="dialog" aria-modal="true" aria-labelledby="turma-modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="turma-modal-title">Cadastrar nova turma</h3>
+        <button type="button" class="modal-close" id="close-turma-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form method="post" class="turma-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="serie">Série</label>
+          <input id="serie" type="text" name="serie" placeholder="Ex.: 9º Ano A" required>
+        </div>
+        <div class="form-group">
+          <label for="turno">Turno</label>
+          <select id="turno" name="turno" required>
+            <option value="">Selecione o turno</option>
+            <option value="Matutino">Matutino</option>
+            <option value="Vespertino">Vespertino</option>
+            <option value="Noturno">Noturno</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sala">Sala</label>
+          <input id="sala" type="text" name="sala" placeholder="Ex.: 101" required>
+        </div>
+        <div class="form-group">
+          <label for="professor">Professor regente</label>
+          <select id="professor" name="professor" required>
+            <option value="">Selecione o professor</option>
+            {% for professor in professores %}
+            <option value="{{ professor.id_professores }}">{{ professor.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-turma-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar turma</button>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="stats-grid">
     <div class="stat-card blue"><div class="stat-info"><h3>Total de Turmas</h3><div class="value">42</div></div><div class="stat-icon">🏫</div></div>
@@ -39,16 +81,46 @@
       <table>
         <thead><tr><th>Código</th><th>Nome</th><th>Ano</th><th>Turno</th><th>Alunos</th><th>Sala</th><th>Professor Regente</th><th>Ações</th></tr></thead>
         <tbody>
-          <tr><td>T001</td><td>9º Ano A</td><td>9º</td><td>Matutino</td><td>32</td><td>101</td><td>Maria Silva</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>T002</td><td>9º Ano B</td><td>9º</td><td>Matutino</td><td>30</td><td>102</td><td>João Santos</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>T003</td><td>8º Ano A</td><td>8º</td><td>Matutino</td><td>28</td><td>201</td><td>Ana Costa</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>T004</td><td>8º Ano B</td><td>8º</td><td>Vespertino</td><td>31</td><td>202</td><td>Pedro Lima</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>T005</td><td>7º Ano A</td><td>7º</td><td>Matutino</td><td>29</td><td>301</td><td>Carla Mendes</td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          {% for turma in turmas %}
+          <tr>
+            <td>T{{ turma.id_turmas|stringformat:"03d" }}</td>
+            <td>{{ turma.serie }}</td>
+            <td>{{ turma.serie }}</td>
+            <td>{{ turma.turno }}</td>
+            <td>{{ turma.estudantes.count }}</td>
+            <td>{{ turma.sala }}</td>
+            <td>{{ turma.professor.nome }}</td>
+            <td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="8">Nenhuma turma cadastrada.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<script>
+  const turmaModal = document.getElementById('turma-modal');
+  const openTurmaModal = document.getElementById('open-turma-modal');
+  const closeTurmaModal = document.getElementById('close-turma-modal');
+  const cancelTurmaModal = document.getElementById('cancel-turma-modal');
+
+  function toggleTurmaModal(show) {
+    turmaModal.classList.toggle('show', show);
+    if (show) document.getElementById('serie').focus();
+  }
+
+  openTurmaModal.addEventListener('click', () => toggleTurmaModal(true));
+  closeTurmaModal.addEventListener('click', () => toggleTurmaModal(false));
+  cancelTurmaModal.addEventListener('click', () => toggleTurmaModal(false));
+  turmaModal.addEventListener('click', (event) => {
+    if (event.target === turmaModal) toggleTurmaModal(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') toggleTurmaModal(false);
+  });
+</script>
 </body>
 </html>

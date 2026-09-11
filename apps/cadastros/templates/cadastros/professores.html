@@ -22,7 +22,51 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Cadastros / Professores</div><h2>Professores</h2></div>
-    <button class="btn btn-primary">+ Novo Professor</button>
+    <button type="button" class="btn btn-primary" id="open-professor-modal">+ Novo Professor</button>
+  </div>
+
+  <div class="modal" id="professor-modal" role="dialog" aria-modal="true" aria-labelledby="professor-modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="professor-modal-title">Cadastrar novo professor</h3>
+        <button type="button" class="modal-close" id="close-professor-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form method="post" class="turma-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="matricula">Matrícula</label>
+          <input id="matricula" type="text" name="matricula" placeholder="Ex.: P007" required>
+        </div>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" name="nome" placeholder="Nome completo" required>
+        </div>
+        <div class="form-group">
+          <label for="formacao">Formação</label>
+          <input id="formacao" type="text" name="formacao" placeholder="Ex.: Lic. Matemática" required>
+        </div>
+        <div class="form-group">
+          <label for="disciplina">Disciplina</label>
+          <input id="disciplina" type="text" name="disciplina" placeholder="Ex.: Matemática" required>
+        </div>
+        <div class="form-group">
+          <label for="carga_horaria">Carga horária</label>
+          <input id="carga_horaria" type="number" name="carga_horaria" min="1" required>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="Ativo">Ativo</option>
+            <option value="Licença">Licença</option>
+            <option value="Inativo">Inativo</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-professor-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar professor</button>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="panel">
     <div class="search-bar">
@@ -34,17 +78,46 @@
       <table>
         <thead><tr><th>Matrícula</th><th>Nome</th><th>Formação</th><th>Área</th><th>Disciplinas</th><th>Carga Horária</th><th>Status</th><th>Ações</th></tr></thead>
         <tbody>
-          <tr><td>P001</td><td>Maria Silva</td><td>Lic. Matemática</td><td>Exatas</td><td>Matemática</td><td>40h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>P002</td><td>João Santos</td><td>Lic. Letras</td><td>Linguagens</td><td>Português, Literatura</td><td>40h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>P003</td><td>Ana Costa</td><td>Lic. História</td><td>Humanas</td><td>História</td><td>30h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>P004</td><td>Pedro Lima</td><td>Lic. Ciências</td><td>Natureza</td><td>Ciências, Biologia</td><td>40h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>P005</td><td>Carla Mendes</td><td>Lic. Geografia</td><td>Humanas</td><td>Geografia</td><td>30h</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>P006</td><td>Roberto Alves</td><td>Lic. Ed. Física</td><td>Linguagens</td><td>Ed. Física</td><td>20h</td><td><span class="badge badge-warning">Licença</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          {% for professor in professores %}
+          <tr>
+            <td>{{ professor.matricula }}</td>
+            <td>{{ professor.nome }}</td>
+            <td>{{ professor.formacao }}</td>
+            <td>-</td>
+            <td>{{ professor.disciplina }}</td>
+            <td>{{ professor.carga_horaria }}h</td>
+            <td><span class="badge {% if professor.status == 'Ativo' %}badge-success{% else %}badge-warning{% endif %}">{{ professor.status }}</span></td>
+            <td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="8">Nenhum professor cadastrado.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<script>
+  const professorModal = document.getElementById('professor-modal');
+  const openProfessorModal = document.getElementById('open-professor-modal');
+  const closeProfessorModal = document.getElementById('close-professor-modal');
+  const cancelProfessorModal = document.getElementById('cancel-professor-modal');
+
+  function toggleProfessorModal(show) {
+    professorModal.classList.toggle('show', show);
+    if (show) document.getElementById('matricula').focus();
+  }
+
+  openProfessorModal.addEventListener('click', () => toggleProfessorModal(true));
+  closeProfessorModal.addEventListener('click', () => toggleProfessorModal(false));
+  cancelProfessorModal.addEventListener('click', () => toggleProfessorModal(false));
+  professorModal.addEventListener('click', (event) => {
+    if (event.target === professorModal) toggleProfessorModal(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') toggleProfessorModal(false);
+  });
+</script>
 </body>
 </html>

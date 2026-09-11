@@ -22,7 +22,65 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Cadastros / Estudantes</div><h2>Estudantes</h2></div>
-    <button class="btn btn-primary">+ Novo Estudante</button>
+    <button type="button" class="btn btn-primary" id="open-estudante-modal">+ Novo Estudante</button>
+  </div>
+
+  <div class="modal" id="estudante-modal" role="dialog" aria-modal="true" aria-labelledby="estudante-modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="estudante-modal-title">Cadastrar novo estudante</h3>
+        <button type="button" class="modal-close" id="close-estudante-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form method="post" class="turma-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="matricula">Matrícula</label>
+          <input id="matricula" type="text" name="matricula" placeholder="Ex.: 2026001" required>
+        </div>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" name="nome" placeholder="Nome completo" required>
+        </div>
+        <div class="form-group">
+          <label for="turma">Turma</label>
+          <select id="turma" name="turma" required>
+            <option value="">Selecione a turma</option>
+            {% for turma in turmas %}
+            <option value="{{ turma.id_turmas }}">{{ turma.serie }} - {{ turma.turno }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="data_nascimento">Data de nascimento</label>
+          <input id="data_nascimento" type="date" name="data_nascimento" required>
+        </div>
+        <div class="form-group">
+          <label for="responsavel">Responsável</label>
+          <select id="responsavel" name="responsavel" required>
+            <option value="">Selecione o responsável</option>
+            {% for responsavel in responsaveis %}
+            <option value="{{ responsavel.id_responsaveis }}">{{ responsavel.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input id="telefone" type="tel" name="telefone" placeholder="(00) 00000-0000" required>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+            <option value="Transferido">Transferido</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-estudante-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar estudante</button>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="stats-grid">
     <div class="stat-card blue"><div class="stat-info"><h3>Total</h3><div class="value">1.247</div></div><div class="stat-icon">👨‍🎓</div></div>
@@ -41,16 +99,46 @@
       <table>
         <thead><tr><th>Matrícula</th><th>Nome</th><th>Turma</th><th>Data Nasc.</th><th>Responsável</th><th>Telefone</th><th>Status</th><th>Ações</th></tr></thead>
         <tbody>
-          <tr><td>2026001</td><td>Ana Beatriz Oliveira</td><td>9º A</td><td>15/03/2011</td><td>Maria Oliveira</td><td>(11) 98765-4321</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>2026002</td><td>Bruno Carvalho Silva</td><td>9º A</td><td>22/07/2011</td><td>Carlos Silva</td><td>(11) 91234-5678</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>2026003</td><td>Carla Mendes Souza</td><td>9º A</td><td>08/11/2011</td><td>Juliana Souza</td><td>(11) 99876-5432</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>2026004</td><td>Daniel Pereira Lima</td><td>9º B</td><td>30/05/2011</td><td>Roberto Lima</td><td>(11) 93456-7890</td><td><span class="badge badge-warning">Pendência</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>2026005</td><td>Eduarda Santos Costa</td><td>8º A</td><td>12/09/2012</td><td>Fernanda Costa</td><td>(11) 97654-3210</td><td><span class="badge badge-success">Ativo</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          {% for estudante in estudantes %}
+          <tr>
+            <td>{{ estudante.matricula }}</td>
+            <td>{{ estudante.nome }}</td>
+            <td>{{ estudante.turma.serie }}</td>
+            <td>{{ estudante.data_nascimento|date:"d/m/Y" }}</td>
+            <td>{{ estudante.responsavel.nome }}</td>
+            <td>{{ estudante.telefone }}</td>
+            <td><span class="badge {% if estudante.status == 'Ativo' %}badge-success{% else %}badge-warning{% endif %}">{{ estudante.status }}</span></td>
+            <td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="8">Nenhum estudante cadastrado.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<script>
+  const estudanteModal = document.getElementById('estudante-modal');
+  const openEstudanteModal = document.getElementById('open-estudante-modal');
+  const closeEstudanteModal = document.getElementById('close-estudante-modal');
+  const cancelEstudanteModal = document.getElementById('cancel-estudante-modal');
+
+  function toggleEstudanteModal(show) {
+    estudanteModal.classList.toggle('show', show);
+    if (show) document.getElementById('matricula').focus();
+  }
+
+  openEstudanteModal.addEventListener('click', () => toggleEstudanteModal(true));
+  closeEstudanteModal.addEventListener('click', () => toggleEstudanteModal(false));
+  cancelEstudanteModal.addEventListener('click', () => toggleEstudanteModal(false));
+  estudanteModal.addEventListener('click', (event) => {
+    if (event.target === estudanteModal) toggleEstudanteModal(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') toggleEstudanteModal(false);
+  });
+</script>
 </body>
 </html>

@@ -161,6 +161,10 @@ tr:hover { background: #f9fafb; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .modal-header h3 { color: #1e3a8a; }
 .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280; }
+.turma-form { display: grid; gap: 15px; }
+.turma-form input, .turma-form select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+.turma-form input:focus, .turma-form select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px; }
 
 /* Empty state */
 .empty-state { text-align: center; padding: 40px; color: #6b7280; }
@@ -192,3 +196,88 @@ tr:hover { background: #f9fafb; }
 .folder-index li { margin-bottom: 10px; }
 .folder-index a { color: #3b82f6; text-decoration: none; font-size: 16px; font-weight: 500; }
 .folder-index a:hover { text-decoration: underline; }
+
+/* ==========================================================
+   Gestão Escolar - Design System (Autenticação)
+   Mesma paleta, tipografia e componentes usados nos módulos:
+   Dashboard, Acadêmico, Cadastros, Financeiro, Comunicação,
+   Administrativo, Patrimônio e Sistema.
+   ========================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body { background: #f4f6f9; color: #333; }
+
+/* ---------- Botões (mesmo padrão dos outros módulos) ---------- */
+.btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
+.btn-primary { background: #3b82f6; color: white; }
+.btn-primary:hover { background: #2563eb; }
+.btn-success { background: #10b981; color: white; }
+.btn-success:hover { background: #059669; }
+
+/* ---------- Formulários (mesmo padrão dos outros módulos) ---------- */
+.form-group { display: flex; flex-direction: column; margin-bottom: 18px; }
+.form-group label { font-size: 13px; color: #374151; margin-bottom: 6px; font-weight: 500; }
+.form-group input,
+.form-group select { padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; transition: border-color 0.2s; }
+.form-group input:focus,
+.form-group select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+
+.breadcrumb { color: #6b7280; font-size: 14px; }
+
+/* ---------- Layout da tela de autenticação ---------- */
+.auth-body { min-height: 100vh; }
+
+.auth-wrapper { display: flex; min-height: 100vh; }
+
+/* Painel esquerdo - branding (mesmo gradiente da sidebar) */
+.auth-brand {
+  flex: 1;
+  background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+.auth-brand-content { max-width: 420px; }
+.auth-brand-content h1 { font-size: 28px; margin-bottom: 16px; }
+.auth-brand-content > p { font-size: 15px; opacity: 0.85; line-height: 1.6; margin-bottom: 30px; }
+.auth-brand-list { list-style: none; }
+.auth-brand-list li { font-size: 14px; padding: 8px 0; opacity: 0.9; }
+
+/* Painel direito - formulário */
+.auth-panel {
+  flex: 1;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 30px;
+}
+.auth-card { width: 100%; max-width: 400px; }
+.auth-card-header { margin-bottom: 28px; }
+.auth-card-header h2 { color: #1e3a8a; font-size: 24px; margin-bottom: 6px; }
+
+.auth-form-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; font-size: 14px; color: #6b7280; flex-wrap: wrap; gap: 10px; }
+.auth-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+.auth-link { color: #3b82f6; text-decoration: none; font-weight: 500; }
+.auth-link:hover { text-decoration: underline; }
+
+.auth-submit { width: 100%; padding: 12px; font-size: 15px; margin-top: 6px; }
+
+.auth-footer { text-align: center; margin-top: 24px; color: #6b7280; font-size: 14px; }
+
+.auth-terms { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #6b7280; margin-bottom: 22px; cursor: pointer; line-height: 1.5; }
+.auth-terms input { margin-top: 3px; }
+
+.auth-divider { text-align: center; color: #9ca3af; font-size: 13px; margin: 22px 0; position: relative; }
+.auth-divider::before, .auth-divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: #e5e7eb; }
+.auth-divider::before { left: 0; }
+.auth-divider::after { right: 0; }
+
+/* Responsivo: esconde o painel de branding em telas pequenas */
+@media (max-width: 860px) {
+  .auth-brand { display: none; }
+  .auth-panel { padding: 30px 20px; }
+}

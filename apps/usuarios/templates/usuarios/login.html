@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+  <!-- Painel de branding -->
+  <div class="auth-brand">
+    <div class="auth-brand-content">
+      <h1>🎓 Gestão Escolar</h1>
+      <p>Sistema completo de gestão escolar: acadêmico, financeiro, comunicação, administrativo, patrimônio e muito mais em um só lugar.</p>
+      <ul class="auth-brand-list">
+        <li>✅ Controle acadêmico completo</li>
+        <li>✅ Gestão financeira integrada</li>
+        <li>✅ Comunicação direta com pais e alunos</li>
+        <li>✅ Relatórios e KPIs em tempo real</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Painel de formulário -->
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="breadcrumb">Acesso ao sistema</div>
+        <h2>Bem-vindo de volta</h2>
+      </div>
+
+      <form>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com">
+        </div>
+
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <div class="auth-form-row">
+          <label class="auth-checkbox">
+            <input type="checkbox"> Lembrar-me
+          </label>
+          <a href="#" class="auth-link">Esqueceu a senha?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit">Entrar</button>
+      </form>
+
+      <p class="auth-footer">Não tem uma conta? <a href="cadastro.html" class="auth-link">Cadastre-se</a></p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

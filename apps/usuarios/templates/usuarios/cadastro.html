@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar Conta - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+  <!-- Painel de branding -->
+  <div class="auth-brand">
+    <div class="auth-brand-content">
+      <h1>🎓 Gestão Escolar</h1>
+      <p>Crie sua conta e tenha acesso a todos os módulos do sistema: acadêmico, financeiro, comunicação, administrativo, patrimônio e muito mais.</p>
+      <ul class="auth-brand-list">
+        <li>✅ Cadastro rápido e seguro</li>
+        <li>✅ Acesso conforme seu perfil (admin, professor, aluno ou responsável)</li>
+        <li>✅ Dados protegidos e criptografados</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Painel de formulário -->
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="breadcrumb">Novo cadastro</div>
+        <h2>Criar sua conta</h2>
+      </div>
+
+      <form>
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" placeholder="Digite seu nome completo">
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com">
+        </div>
+
+        <div class="form-group">
+          <label>Tipo de Usuário</label>
+          <select>
+            <option>Administrador</option>
+            <option>Professor</option>
+            <option>Aluno</option>
+            <option>Pai/Responsável</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Senha</label>
+          <input type="password" placeholder="Crie uma senha">
+        </div>
+
+        <div class="form-group">
+          <label>Confirmar Senha</label>
+          <input type="password" placeholder="Repita a senha">
+        </div>
+
+        <label class="auth-terms">
+          <input type="checkbox">
+          <span>Concordo com os <a href="#" class="auth-link">Termos de Uso</a> e a <a href="#" class="auth-link">Política de Privacidade</a></span>
+        </label>
+
+        <button type="submit" class="btn btn-success auth-submit">Criar Conta</button>
+      </form>
+
+      <p class="auth-footer">Já tem uma conta? <a href="login.html" class="auth-link">Fazer login</a></p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

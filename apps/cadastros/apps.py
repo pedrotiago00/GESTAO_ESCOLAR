@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class CadastrosConfig(AppConfig):
-    name = 'cadastros'
+    name = 'apps.cadastros'
