@@ -32,39 +32,38 @@
         <h2>Criar sua conta</h2>
       </div>
 
-      <form>
+      {% if erros %}
+        <div class="form-errors">
+          {% for erro in erros %}
+            <p>{{ erro }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'cadastro' %}">
+        {% csrf_token %}
         <div class="form-group">
-          <label>Nome Completo</label>
-          <input type="text" placeholder="Digite seu nome completo">
+          <label for="nome">Nome Completo</label>
+          <input id="nome" name="nome" type="text" placeholder="Digite seu nome completo" value="{{ request.POST.nome|default:'' }}" required>
         </div>
 
         <div class="form-group">
-          <label>E-mail</label>
-          <input type="email" placeholder="seu@email.com">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" placeholder="seu@email.com" value="{{ request.POST.email|default:'' }}" required>
         </div>
 
         <div class="form-group">
-          <label>Tipo de Usuário</label>
-          <select>
-            <option>Administrador</option>
-            <option>Professor</option>
-            <option>Aluno</option>
-            <option>Pai/Responsável</option>
-          </select>
+          <label for="senha">Senha</label>
+          <input id="senha" name="senha" type="password" placeholder="Crie uma senha" required>
         </div>
 
         <div class="form-group">
-          <label>Senha</label>
-          <input type="password" placeholder="Crie uma senha">
-        </div>
-
-        <div class="form-group">
-          <label>Confirmar Senha</label>
-          <input type="password" placeholder="Repita a senha">
+          <label for="confirmar_senha">Confirmar Senha</label>
+          <input id="confirmar_senha" name="confirmar_senha" type="password" placeholder="Repita a senha" required>
         </div>
 
         <label class="auth-terms">
-          <input type="checkbox">
+          <input name="termos" type="checkbox" required>
           <span>Concordo com os <a href="#" class="auth-link">Termos de Uso</a> e a <a href="#" class="auth-link">Política de Privacidade</a></span>
         </label>
 
