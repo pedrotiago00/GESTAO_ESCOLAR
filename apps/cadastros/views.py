@@ -25,12 +25,22 @@ def turmas(request):
 
 def disciplinas(request):
     if request.method == 'POST':
-        Disciplinas.objects.create(
-            nome=request.POST.get('nome', '').strip(),
-            carga_horaria=request.POST.get('carga_horaria'),
-            status=request.POST.get('status', 'Ativo').strip(),
-        )
+        codigo = request.POST.get('codigo', '').strip()
+        nome = request.POST.get('nome', '').strip()
+        area = request.POST.get('area', '').strip()
+        carga_horaria = request.POST.get('carga_horaria', '').strip()
+        status = request.POST.get('status', 'Ativa').strip()
+
+        if codigo and nome and area and carga_horaria:
+            Disciplinas.objects.create(
+                codigo=codigo,
+                nome=nome,
+                area=area,
+                carga_horaria=carga_horaria,
+                status=status,
+            )
         return redirect('disciplinas')
+
     disciplinas = Disciplinas.objects.all().order_by('nome')
     return render(request, 'cadastros/disciplinas.html', {'disciplinas': disciplinas})
 

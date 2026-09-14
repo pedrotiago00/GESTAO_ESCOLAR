@@ -22,26 +22,104 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Cadastros / Disciplinas</div><h2>Disciplinas</h2></div>
-    <button class="btn btn-primary">+ Nova Disciplina</button>
+    <button type="button" class="btn btn-primary" id="open-disciplina-modal">+ Nova Disciplina</button>
   </div>
+
+  <div class="modal" id="disciplina-modal" role="dialog" aria-modal="true" aria-labelledby="disciplina-modal-title">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="disciplina-modal-title">Cadastrar nova disciplina</h3>
+        <button type="button" class="modal-close" id="close-disciplina-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form method="post" class="turma-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="codigo">Código</label>
+          <input id="codigo" type="text" name="codigo" placeholder="Ex.: D009" required>
+        </div>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" name="nome" placeholder="Ex.: Física" required>
+        </div>
+        <div class="form-group">
+          <label for="area">Área</label>
+          <input id="area" type="text" name="area" placeholder="Ex.: Exatas" required>
+        </div>
+        <div class="form-group">
+          <label for="carga_horaria">Carga horária</label>
+          <input id="carga_horaria" type="number" name="carga_horaria" min="1" placeholder="Ex.: 4" required>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="Ativa">Ativa</option>
+            <option value="Inativa">Inativa</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-disciplina-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar disciplina</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="panel">
     <div class="table-container">
       <table>
-        <thead><tr><th>Código</th><th>Nome</th><th>Área</th><th>Carga Horária</th><th>Professores</th><th>Turmas</th><th>Status</th><th>Ações</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Área</th>
+            <th>Carga Horária</th>
+            <th>Professores</th>
+            <th>Turmas</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr><td>D001</td><td>Matemática</td><td>Exatas</td><td>4h/semana</td><td>3</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D002</td><td>Português</td><td>Linguagens</td><td>4h/semana</td><td>4</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D003</td><td>História</td><td>Humanas</td><td>3h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D004</td><td>Geografia</td><td>Humanas</td><td>2h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D005</td><td>Ciências</td><td>Natureza</td><td>3h/semana</td><td>3</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D006</td><td>Ed. Física</td><td>Linguagens</td><td>2h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D007</td><td>Artes</td><td>Linguagens</td><td>2h/semana</td><td>1</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
-          <tr><td>D008</td><td>Inglês</td><td>Linguagens</td><td>2h/semana</td><td>2</td><td>12</td><td><span class="badge badge-success">Ativa</span></td><td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td></tr>
+          {% for disciplina in disciplinas %}
+          <tr>
+            <td>{{ disciplina.codigo }}</td>
+            <td>{{ disciplina.nome }}</td>
+            <td>{{ disciplina.area }}</td>
+            <td>{{ disciplina.carga_horaria }}h/semana</td>
+            <td>{{ disciplina.professores.count }}</td>
+            <td>-</td>
+            <td><span class="badge {% if disciplina.status == 'Ativa' %}badge-success{% else %}badge-warning{% endif %}">{{ disciplina.status }}</span></td>
+            <td><button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="8">Nenhuma disciplina cadastrada.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<script>
+  const disciplinaModal = document.getElementById('disciplina-modal');
+  const openDisciplinaModal = document.getElementById('open-disciplina-modal');
+  const closeDisciplinaModal = document.getElementById('close-disciplina-modal');
+  const cancelDisciplinaModal = document.getElementById('cancel-disciplina-modal');
+
+  function toggleDisciplinaModal(show) {
+    disciplinaModal.classList.toggle('show', show);
+    if (show) document.getElementById('codigo').focus();
+  }
+
+  openDisciplinaModal.addEventListener('click', () => toggleDisciplinaModal(true));
+  closeDisciplinaModal.addEventListener('click', () => toggleDisciplinaModal(false));
+  cancelDisciplinaModal.addEventListener('click', () => toggleDisciplinaModal(false));
+  disciplinaModal.addEventListener('click', (event) => {
+    if (event.target === disciplinaModal) toggleDisciplinaModal(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') toggleDisciplinaModal(false);
+  });
+</script>
 </body>
 </html>
