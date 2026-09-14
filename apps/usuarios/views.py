@@ -1,9 +1,11 @@
 from django.contrib.auth.hashers import make_password
-from django.shortcuts import redirect, render
-from .models import Usuarios
+from django.shortcuts import render
+from .forms import LoginForms, CadastroForms
 
 def login(request):
-    return render(request, 'usuarios/login.html')
+    form = LoginForms()
+    return render(request, 'usuarios/login.html', {'form': form})
 
 def cadastro(request):
-    return render(request, 'usuarios/cadastro.html')
+    form = CadastroForms()
+    return render(request, 'usuarios/cadastro.html', {'form': form})

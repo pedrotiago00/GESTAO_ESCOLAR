@@ -5,9 +5,20 @@ class Professores(models.Model):
     matricula = models.CharField(max_length=20, unique=True)
     nome = models.CharField(max_length=100)
     formacao = models.CharField(max_length=100)
-    disciplina = models.CharField(max_length=100)
+    disciplina = models.ForeignKey('Disciplinas', on_delete=models.PROTECT, related_name='professores')
     carga_horaria = models.PositiveIntegerField()
     status = models.CharField(max_length=20, default='Ativo')
+
+    def __str__(self):
+        return self.nome
+
+class Disciplinas(models.Model):
+    id_disciplinas = models.AutoField(primary_key=True)
+    codigo = models.CharField(max_length=20, unique=True)
+    nome = models.CharField(max_length=100)
+    area = models.CharField(max_length=100)
+    carga_horaria = models.PositiveIntegerField()
+    status = models.CharField(max_length=20, default='Ativa')
 
     def __str__(self):
         return self.nome
@@ -18,7 +29,7 @@ class Turmas(models.Model):
     turno = models.CharField(max_length=15)
     sala = models.CharField(max_length=15)
     professor = models.ForeignKey(Professores, on_delete=models.PROTECT, related_name='turmas')
-
+    
     def __str__(self):
         return f"{self.serie} - {self.turno}"
 

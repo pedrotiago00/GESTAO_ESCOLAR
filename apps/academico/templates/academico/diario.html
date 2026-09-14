@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diário de Classe - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'horarios' %}">Horários</a>
+  <a href="{% url 'frequencia' %}">Frequência</a>
+  <a href="{% url 'exames' %}">Exames</a>
+  <a href="{% url 'notas' %}">Notas</a>
+  <a href="{% url 'planejamento' %}">Planejamento</a>
+  <a href="{% url 'diario_de_classe' %}">Diário de Classe</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Acadêmico / Diário de Classe</div><h2>Diário de Classe</h2></div>
+    <button class="btn btn-primary">+ Novo Registro</button>
+  </div>
+  <div class="panel">
+    <div class="form-grid">
+      <div class="form-group"><label>Professor</label><select><option>Maria Silva</option><option>João Santos</option></select></div>
+      <div class="form-group"><label>Turma</label><select><option>9º Ano A</option><option>8º Ano B</option></select></div>
+      <div class="form-group"><label>Data</label><input type="date" value="2026-09-08"></div>
+      <div class="form-group"><label>Aula</label><input type="text" value="1ª aula - 07:30 às 08:20"></div>
+    </div>
+    <div class="form-group">
+      <label>Conteúdo Ministrado</label>
+      <textarea rows="4" placeholder="Descreva o conteúdo da aula...">Equações do 2º grau - Fórmula de Bhaskara. Resolução de exercícios práticos.</textarea>
+    </div>
+    <div class="form-group" style="margin-top:15px;">
+      <label>Observações</label>
+      <textarea rows="3" placeholder="Observações sobre a aula...">Turma participativa. Alguns alunos com dificuldade na fórmula.</textarea>
+    </div>
+    <div style="margin-top:20px;">
+      <button class="btn btn-success">💾 Salvar</button>
+      <button class="btn btn-secondary">Cancelar</button>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>📖 Registros Recentes</h3></div>
+    <div class="timeline">
+      <div class="timeline-item"><h4>Matemática - 9º A</h4><p>Equações do 2º grau - Fórmula de Bhaskara</p><div class="time">08/09/2026 - 07:30</div></div>
+      <div class="timeline-item"><h4>Português - 8º B</h4><p>Interpretação de texto - Crônicas modernas</p><div class="time">07/09/2026 - 10:00</div></div>
+      <div class="timeline-item"><h4>História - 7º C</h4><p>Revolução Industrial - Consequências sociais</p><div class="time">07/09/2026 - 08:20</div></div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

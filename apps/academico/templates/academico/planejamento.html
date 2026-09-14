@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planejamento - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'horarios' %}">Horários</a>
+  <a href="{% url 'frequencia' %}">Frequência</a>
+  <a href="{% url 'exames' %}">Exames</a>
+  <a href="{% url 'notas' %}">Notas</a>
+  <a href="{% url 'planejamento' %}">Planejamento</a>
+  <a href="{% url 'diario_de_classe' %}">Diário de Classe</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Acadêmico / Planejamento</div><h2>Planejamento de Aulas</h2></div>
+    <button class="btn btn-primary">+ Novo Planejamento</button>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>📅 Setembro 2026</h3></div>
+    <div class="calendar">
+      <div class="cal-header">Dom</div><div class="cal-header">Seg</div><div class="cal-header">Ter</div><div class="cal-header">Qua</div><div class="cal-header">Qui</div><div class="cal-header">Sex</div><div class="cal-header">Sáb</div>
+      <div class="cal-day "><div class="day-num">1</div></div><div class="cal-day "><div class="day-num">2</div></div><div class="cal-day "><div class="day-num">3</div></div><div class="cal-day "><div class="day-num">4</div></div><div class="cal-day has-event"><div class="day-num">5</div><span class="event">Reunião</span></div><div class="cal-day "><div class="day-num">6</div></div><div class="cal-day "><div class="day-num">7</div></div><div class="cal-day today"><div class="day-num">8</div></div><div class="cal-day "><div class="day-num">9</div></div><div class="cal-day has-event"><div class="day-num">10</div><span class="event">Prova Mat</span></div><div class="cal-day "><div class="day-num">11</div></div><div class="cal-day "><div class="day-num">12</div></div><div class="cal-day "><div class="day-num">13</div></div><div class="cal-day "><div class="day-num">14</div></div><div class="cal-day has-event"><div class="day-num">15</div><span class="event">Feira</span></div><div class="cal-day "><div class="day-num">16</div></div><div class="cal-day "><div class="day-num">17</div></div><div class="cal-day "><div class="day-num">18</div></div><div class="cal-day "><div class="day-num">19</div></div><div class="cal-day has-event"><div class="day-num">20</div><span class="event">Conselho</span></div><div class="cal-day "><div class="day-num">21</div></div><div class="cal-day "><div class="day-num">22</div></div><div class="cal-day "><div class="day-num">23</div></div><div class="cal-day "><div class="day-num">24</div></div><div class="cal-day has-event"><div class="day-num">25</div><span class="event">Fechamento</span></div><div class="cal-day "><div class="day-num">26</div></div><div class="cal-day "><div class="day-num">27</div></div><div class="cal-day "><div class="day-num">28</div></div><div class="cal-day "><div class="day-num">29</div></div><div class="cal-day "><div class="day-num">30</div></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>📝 Planejamentos Pendentes</h3></div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Professor</th><th>Disciplina</th><th>Turma</th><th>Período</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr><td>Maria Silva</td><td>Matemática</td><td>9º A</td><td>Setembro</td><td><span class="badge badge-success">Aprovado</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          <tr><td>João Santos</td><td>Português</td><td>8º B</td><td>Setembro</td><td><span class="badge badge-warning">Pendente</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+          <tr><td>Ana Costa</td><td>História</td><td>7º C</td><td>Setembro</td><td><span class="badge badge-danger">Atrasado</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

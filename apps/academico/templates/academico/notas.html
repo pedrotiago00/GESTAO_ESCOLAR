@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notas - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'horarios' %}">Horários</a>
+  <a href="{% url 'frequencia' %}">Frequência</a>
+  <a href="{% url 'exames' %}">Exames</a>
+  <a href="{% url 'notas' %}">Notas</a>
+  <a href="{% url 'planejamento' %}">Planejamento</a>
+  <a href="{% url 'diario_de_classe' %}">Diário de Classe</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Acadêmico / Notas</div><h2>Lançamento de Notas</h2></div>
+    <button class="btn btn-success" type="submit" form="nota-form">💾 Salvar Nota</button>
+  </div>
+  <div class="panel">
+    <form method="post" id="nota-form">
+      {% csrf_token %}
+      <div class="form-grid">
+        <div class="form-group"><label for="estudante">Estudante</label><select id="estudante" name="estudante" required><option value="">Selecione</option>{% for estudante in estudantes %}<option value="{{ estudante.pk }}">{{ estudante.nome }}</option>{% endfor %}</select></div>
+        <div class="form-group"><label for="disciplina">Disciplina</label><select id="disciplina" name="disciplina" required><option value="">Selecione</option>{% for disciplina in disciplinas %}<option value="{{ disciplina.pk }}">{{ disciplina.nome }}</option>{% endfor %}</select></div>
+        <div class="form-group"><label for="bimestre">Bimestre</label><select id="bimestre" name="bimestre" required><option value="1">1º Bimestre</option><option value="2">2º Bimestre</option><option value="3">3º Bimestre</option><option value="4">4º Bimestre</option></select></div>
+        <div class="form-group"><label for="tipo_avaliacao">Tipo de avaliação</label><input id="tipo_avaliacao" name="tipo_avaliacao" maxlength="50" required></div>
+        <div class="form-group"><label for="nota_1">Nota 1</label><input id="nota_1" name="nota_1" type="number" min="0" max="10" step="0.1"></div>
+        <div class="form-group"><label for="nota_2">Nota 2</label><input id="nota_2" name="nota_2" type="number" min="0" max="10" step="0.1"></div>
+        <div class="form-group"><label for="nota_3">Nota 3</label><input id="nota_3" name="nota_3" type="number" min="0" max="10" step="0.1"></div>
+      </div>
+    </form>
+  </div>
+  <div class="panel">
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Aluno</th><th>Disciplina</th><th>Bimestre</th><th>Tipo</th><th>Nota 1</th><th>Nota 2</th><th>Nota 3</th><th>Média</th><th>Situação</th></tr></thead>
+        <tbody>
+          {% for nota in notas %}
+          <tr>
+            <td>{{ nota.estudante }}</td>
+            <td>{{ nota.disciplina }}</td>
+            <td>{{ nota.get_bimestre_display }}</td>
+            <td>{{ nota.tipo_avaliacao }}</td>
+            <td>{{ nota.nota_1|default:"-" }}</td>
+            <td>{{ nota.nota_2|default:"-" }}</td>
+            <td>{{ nota.nota_3|default:"-" }}</td>
+            <td><strong>{{ nota.media|default:"-" }}</strong></td>
+            <td>
+              {% if nota.situacao == 'APROVADO' %}<span class="badge badge-success">Aprovado</span>
+              {% elif nota.situacao == 'REPROVADO' %}<span class="badge badge-danger">Reprovado</span>
+              {% else %}<span class="badge badge-warning">Recuperação</span>{% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="9" class="empty-state">Nenhuma nota cadastrada.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

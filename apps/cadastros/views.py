@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-from .models import Estudantes, Professores, Responsaveis, Turmas
+from .models import Estudantes, Professores, Responsaveis, Turmas, Disciplinas
 
 def cadastros(request):
     return render(request, 'cadastros/index.html')
@@ -24,7 +24,15 @@ def turmas(request):
     })
 
 def disciplinas(request):
-    return render(request, 'cadastros/disciplinas.html')
+    if request.method == 'POST':
+        Disciplinas.objects.create(
+            nome=request.POST.get('nome', '').strip(),
+            carga_horaria=request.POST.get('carga_horaria'),
+            status=request.POST.get('status', 'Ativo').strip(),
+        )
+        return redirect('disciplinas')
+    disciplinas = Disciplinas.objects.all().order_by('nome')
+    return render(request, 'cadastros/disciplinas.html', {'disciplinas': disciplinas})
 
 def estudantes(request):
     if request.method == 'POST':

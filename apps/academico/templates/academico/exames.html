@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exames - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'horarios' %}">Horários</a>
+  <a href="{% url 'frequencia' %}">Frequência</a>
+  <a href="{% url 'exames' %}">Exames</a>
+  <a href="{% url 'notas' %}">Notas</a>
+  <a href="{% url 'planejamento' %}">Planejamento</a>
+  <a href="{% url 'diario_de_classe' %}">Diário de Classe</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Acadêmico / Exames</div><h2>Calendário de Exames</h2></div>
+    <button class="btn btn-primary" type="submit" form="exame-form">+ Agendar Exame</button>
+  </div>
+  <div class="panel">
+    <form method="post" id="exame-form">
+      {% csrf_token %}
+      <div class="form-grid">
+        <div class="form-group"><label for="data">Data</label><input id="data" name="data" type="date" required></div>
+        <div class="form-group"><label for="tipo">Tipo</label><input id="tipo" name="tipo" maxlength="50" required></div>
+        <div class="form-group"><label for="disciplina">Disciplina</label><select id="disciplina" name="disciplina" required><option value="">Selecione</option>{% for disciplina in disciplinas %}<option value="{{ disciplina.pk }}">{{ disciplina.nome }}</option>{% endfor %}</select></div>
+        <div class="form-group"><label for="turma">Turma</label><select id="turma" name="turma" required><option value="">Selecione</option>{% for turma in turmas %}<option value="{{ turma.pk }}">{{ turma }}</option>{% endfor %}</select></div>
+        <div class="form-group"><label for="professor">Professor</label><select id="professor" name="professor" required><option value="">Selecione</option>{% for professor in professores %}<option value="{{ professor.pk }}">{{ professor.nome }}</option>{% endfor %}</select></div>
+        <div class="form-group"><label for="status">Status</label><select id="status" name="status"><option>Agendado</option><option>Realizado</option><option>Cancelado</option></select></div>
+      </div>
+    </form>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card blue"><div class="stat-info"><h3>Exames Agendados</h3><div class="value">{{ agendados }}</div></div><div class="stat-icon">📝</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Realizados</h3><div class="value">{{ realizados }}</div></div><div class="stat-icon">✅</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Próximos 7 dias</h3><div class="value">{{ proximos }}</div></div><div class="stat-icon">⏰</div></div>
+    <div class="stat-card purple"><div class="stat-info"><h3>Recuperações</h3><div class="value">{{ recuperacoes }}</div></div><div class="stat-icon">🔄</div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>📅 Próximos Exames</h3></div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Data</th><th>Disciplina</th><th>Turma</th><th>Professor</th><th>Tipo</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          {% for exame in exames %}
+          <tr>
+            <td>{{ exame.data|date:"d/m/Y" }}</td>
+            <td>{{ exame.disciplina }}</td>
+            <td>{{ exame.turma }}</td>
+            <td>{{ exame.professor }}</td>
+            <td>{{ exame.tipo }}</td>
+            <td>
+              {% if exame.status == 'Realizado' %}<span class="badge badge-success">{{ exame.status }}</span>
+              {% elif exame.status == 'Cancelado' %}<span class="badge badge-danger">{{ exame.status }}</span>
+              {% else %}<span class="badge badge-warning">{{ exame.status }}</span>{% endif %}
+            </td>
+            <td>-</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="7" class="empty-state">Nenhum exame cadastrado.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

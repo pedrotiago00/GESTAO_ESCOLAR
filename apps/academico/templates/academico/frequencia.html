@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frequência - Gestão Escolar</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="static-header">
+  <h1>🎓 Gestão Escolar</h1>
+</header>
+<nav class="static-nav">
+  <a href="{% url 'horarios' %}">Horários</a>
+  <a href="{% url 'frequencia' %}">Frequência</a>
+  <a href="{% url 'exames' %}">Exames</a>
+  <a href="{% url 'notas' %}">Notas</a>
+  <a href="{% url 'planejamento' %}">Planejamento</a>
+  <a href="{% url 'diario_de_classe' %}">Diário de Classe</a>
+</nav>
+<main class="content">
+
+  <div class="page-header">
+    <div><div class="breadcrumb">Acadêmico / Frequência</div><h2>Registro de Frequência</h2></div>
+    <button class="btn btn-success" type="submit" form="frequencia-form">💾 Salvar Frequência</button>
+  </div>
+  <div class="panel">
+    <form method="post" id="frequencia-form">
+      {% csrf_token %}
+      <div class="form-grid">
+        <div class="form-group"><label for="estudante">Estudante</label><select id="estudante" name="estudante" required><option value="">Selecione</option>{% for estudante in estudantes %}<option value="{{ estudante.pk }}">{{ estudante.nome }}</option>{% endfor %}</select></div>
+        <div class="form-group"><label for="data">Data</label><input id="data" name="data" type="date" required></div>
+        <div class="form-group"><label for="situacao">Situação</label><select id="situacao" name="situacao" required><option value="presente">Presente</option><option value="atraso">Atraso</option><option value="falta">Falta</option></select></div>
+      </div>
+    </form>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Frequências cadastradas</h3></div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Data</th><th>Aluno</th><th>Situação</th></tr></thead>
+        <tbody>
+          {% for frequencia in frequencias %}
+          <tr>
+            <td>{{ frequencia.data|date:"d/m/Y" }}</td>
+            <td>{{ frequencia.estudante }}</td>
+            <td>
+              {% if frequencia.presente %}<span class="badge badge-success">Presente</span>
+              {% elif frequencia.atraso %}<span class="badge badge-warning">Atraso</span>
+              {% elif frequencia.falta %}<span class="badge badge-danger">Falta</span>
+              {% else %}<span class="badge badge-gray">Não informado</span>{% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3" class="empty-state">Nenhuma frequência cadastrada.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:20px; display:flex; gap:20px; color:#6b7280; font-size:14px;">
+      <span>✅ Presentes: {{ presentes }}</span>
+      <span>⏰ Atrasos: {{ atrasos }}</span>
+      <span>❌ Faltas: {{ faltas }}</span>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
