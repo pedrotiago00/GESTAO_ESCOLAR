@@ -33,7 +33,7 @@
       </div>
 
       {% if erros %}
-        <div class="form-errors">
+        <div class="form-errors" aria-live="polite">
           {% for erro in erros %}
             <p>{{ erro }}</p>
           {% endfor %}
@@ -43,8 +43,8 @@
       <form method="post" action="{% url 'cadastro' %}">
         {% csrf_token %}
         <div class="form-group">
-          <label for="nome">Nome Completo</label>
-          <input id="nome" name="nome" type="text" placeholder="Digite seu nome completo" value="{{ request.POST.nome|default:'' }}" required>
+          <label for="username">Nome de usuário</label>
+          <input id="username" name="username" type="text" placeholder="Digite seu nome de usuário" value="{{ request.POST.username|default:'' }}" required>
         </div>
 
         <div class="form-group">
@@ -53,13 +53,23 @@
         </div>
 
         <div class="form-group">
-          <label for="senha">Senha</label>
-          <input id="senha" name="senha" type="password" placeholder="Crie uma senha" required>
+          <label for="escola">Escola</label>
+          <select id="escola" name="escola" required>
+            <option value="">Selecione a escola</option>
+            {% for escola in form.escola.field.queryset %}
+              <option value="{{ escola.pk }}" {% if request.POST.escola == escola.pk|stringformat:'s' %}selected{% endif %}>{{ escola.nome }}</option>
+            {% endfor %}
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="confirmar_senha">Confirmar Senha</label>
-          <input id="confirmar_senha" name="confirmar_senha" type="password" placeholder="Repita a senha" required>
+          <label for="password">Senha</label>
+          <input id="password" name="password" type="password" placeholder="Crie uma senha" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password_confirm">Confirmar Senha</label>
+          <input id="password_confirm" name="password_confirm" type="password" placeholder="Repita a senha" required>
         </div>
 
         <label class="auth-terms">
@@ -70,7 +80,7 @@
         <button type="submit" class="btn btn-success auth-submit">Criar Conta</button>
       </form>
 
-      <p class="auth-footer">Já tem uma conta? <a href="login.html" class="auth-link">Fazer login</a></p>
+      <p class="auth-footer">Já tem uma conta? <a href="{% url 'login' %}" class="auth-link">Fazer login</a></p>
     </div>
   </div>
 

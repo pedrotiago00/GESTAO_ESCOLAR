@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Horarios(models.Model):
+    escola = models.ForeignKey('usuarios.Escola', on_delete=models.PROTECT, related_name='horarios')
     dia_semana = models.CharField(max_length=20)
     hora_inicio = models.TimeField()
     hora_fim = models.TimeField()
@@ -32,6 +33,7 @@ class Horarios(models.Model):
 
 
 class Frequencia(models.Model):
+    escola = models.ForeignKey('usuarios.Escola', on_delete=models.PROTECT, related_name='frequencias')
     estudante = models.ForeignKey(
         'cadastros.Estudantes',
         on_delete=models.CASCADE,
@@ -50,6 +52,7 @@ class Frequencia(models.Model):
 
 
 class Exames(models.Model):
+    escola = models.ForeignKey('usuarios.Escola', on_delete=models.PROTECT, related_name='exames')
     data = models.DateField()
 
     disciplina = models.ForeignKey(
@@ -86,6 +89,7 @@ class Exames(models.Model):
 class Notas(models.Model):
 
     id_notas = models.AutoField(primary_key=True)
+    escola = models.ForeignKey('usuarios.Escola', on_delete=models.PROTECT, related_name='notas')
 
     estudante = models.ForeignKey(
         'cadastros.Estudantes',
@@ -154,12 +158,13 @@ class Notas(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=[
+                    'escola',
                     'estudante',
                     'disciplina',
                     'bimestre',
                     'tipo_avaliacao'
                 ],
-                name='nota_unica_por_avaliacao'
+                name='nota_unica_por_escola_avaliacao'
             )
         ]
 

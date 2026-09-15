@@ -264,6 +264,20 @@ body { background: #f4f6f9; color: #333; }
 .auth-link { color: #3b82f6; text-decoration: none; font-weight: 500; }
 .auth-link:hover { text-decoration: underline; }
 
+.form-errors {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+.form-errors p {
+  margin: 6px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .auth-submit { width: 100%; padding: 12px; font-size: 15px; margin-top: 6px; }
 
 .auth-footer { text-align: center; margin-top: 24px; color: #6b7280; font-size: 14px; }

@@ -33,7 +33,15 @@
         <h2>Bem-vindo de volta</h2>
       </div>
 
-      <form>
+      {% if erros %}
+        <div class="form-errors" aria-live="polite">
+          {% for erro in erros %}
+            <p>{{ erro }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         {% for field in form %}
           <div class="form-group">
@@ -54,7 +62,7 @@
         <button type="submit" class="btn btn-primary auth-submit">Entrar</button>
       </form>
 
-      <p class="auth-footer">Não tem uma conta? <a href="cadastro" class="auth-link">Cadastre-se</a></p>
+      <p class="auth-footer">Não tem uma conta? <a href="{% url 'cadastro' %}" class="auth-link">Cadastre-se</a></p>
     </div>
   </div>
 
