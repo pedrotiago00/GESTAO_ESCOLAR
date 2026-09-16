@@ -11,6 +11,9 @@ body { background: #f4f6f9; color: #333; }
 .sidebar-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
 .sidebar-header h2 { font-size: 18px; margin-bottom: 4px; }
 .sidebar-header p { font-size: 12px; opacity: 0.7; }
+.sidebar nav { padding-bottom: 20px; }
+.menu-title { text-decoration: none; color: white; }
+.menu-title:focus-visible { outline: 2px solid #93c5fd; outline-offset: -2px; }
 
 .menu-item { border-bottom: 1px solid rgba(255,255,255,0.05); }
 .menu-title { padding: 12px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 500; transition: background 0.2s; user-select: none; }
@@ -29,6 +32,7 @@ body { background: #f4f6f9; color: #333; }
 .header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; }
 .header h1 { font-size: 20px; color: #1e3a8a; }
 .user-info { display: flex; align-items: center; gap: 15px; }
+.user-info > span { color: #4b5563; font-size: 14px; }
 .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 .user-menu { position: relative; }
 .user-btn { background: none; border: 1px solid #e5e7eb; padding: 8px 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; }

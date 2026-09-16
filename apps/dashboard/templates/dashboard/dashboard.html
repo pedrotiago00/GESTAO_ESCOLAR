@@ -8,13 +8,129 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-<header class="static-header">
-  <h1>🎓 Gestão Escolar</h1>
-</header>
-<nav class="static-nav">
-  <a href="dashboard.html">Dashboard</a>
-</nav>
-<main class="content">
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>🎓 Gestão Escolar</h2>
+      <p>Painel de administração</p>
+    </div>
+
+    <nav aria-label="Menu principal">
+      <div class="menu-item">
+        <a class="menu-title active" href="{% url 'dashboard' %}">
+          <span>📊 Dashboard</span>
+        </a>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title open" role="button" tabindex="0" aria-expanded="true">
+          <span>🎓 Acadêmico</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu open">
+          <a href="{% url 'academico' %}">Visão geral</a>
+          <a href="{% url 'horarios' %}">Horários</a>
+          <a href="{% url 'frequencia' %}">Frequência</a>
+          <a href="{% url 'notas' %}">Notas</a>
+          <a href="{% url 'exames' %}">Exames</a>
+          <a href="{% url 'planejamento' %}">Planejamento</a>
+          <a href="{% url 'diario_de_classe' %}">Diário de classe</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
+          <span>🗂️ Cadastros</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu">
+          <a href="{% url 'cadastros' %}">Visão geral</a>
+          <a href="{% url 'turmas' %}">Turmas</a>
+          <a href="{% url 'disciplinas' %}">Disciplinas</a>
+          <a href="{% url 'estudantes' %}">Estudantes</a>
+          <a href="{% url 'professores' %}">Professores</a>
+          <a href="{% url 'pais' %}">Pais e responsáveis</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
+          <span>💰 Financeiro</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu">
+          <a href="{% url 'financeiro' %}">Visão geral</a>
+          <a href="{% url 'taxas' %}">Taxas</a>
+          <a href="{% url 'cobrancas' %}">Cobranças</a>
+          <a href="{% url 'atrasos' %}">Atrasos</a>
+          <a href="{% url 'resumo' %}">Resumo financeiro</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
+          <span>📣 Comunicação</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu">
+          <a href="{% url 'comunicacao' %}">Visão geral</a>
+          <a href="{% url 'avisos' %}">Avisos</a>
+          <a href="{% url 'eventos' %}">Eventos</a>
+          <a href="{% url 'reunioes' %}">Reuniões</a>
+          <a href="{% url 'reclamacoes' %}">Reclamações</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
+          <span>🏢 Administrativo</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu">
+          <a href="{% url 'administrativo' %}">Visão geral</a>
+          <a href="{% url 'admissoes' %}">Admissões</a>
+          <a href="{% url 'condutas' %}">Condutas</a>
+          <a href="{% url 'extracurriculares' %}">Extracurriculares</a>
+          <a href="{% url 'substitutos' %}">Substitutos</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
+          <span>📦 Patrimônio</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu">
+          <a href="{% url 'patrimonio' %}">Visão geral</a>
+          <a href="{% url 'ativos' %}">Ativos</a>
+          <a href="{% url 'manutencao' %}">Manutenção</a>
+          <a href="{% url 'inventario' %}">Inventário</a>
+          <a href="{% url 'documentos' %}">Documentos</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
+          <span>⚙️ Sistema</span><span class="arrow">▶</span>
+        </div>
+        <div class="submenu">
+          <a href="{% url 'sistema' %}">Visão geral</a>
+          <a href="{% url 'usuarios' %}">Usuários</a>
+          <a href="{% url 'permissoes' %}">Permissões</a>
+          <a href="{% url 'kpis' %}">KPIs</a>
+          <a href="{% url 'relatorios' %}">Relatórios</a>
+          <a href="{% url 'configuracoes' %}">Configurações</a>
+          <a href="{% url 'perfil' %}">Meu perfil</a>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="header">
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <h1>Visão geral</h1>
+      <div class="user-info">
+        <div class="user-avatar">👤</div>
+        <span>Gestão Escolar</span>
+      </div>
+    </header>
+
+    <main class="content">
 
   <div class="page-header">
     <div>
@@ -123,6 +239,31 @@
     </div>
   </div>
 
-</main>
+    </main>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.menu-title[role="button"]').forEach(function (menuTitle) {
+    function toggleMenu() {
+      var isOpen = menuTitle.classList.toggle('open');
+      menuTitle.nextElementSibling.classList.toggle('open', isOpen);
+      menuTitle.setAttribute('aria-expanded', isOpen);
+    }
+
+    menuTitle.addEventListener('click', toggleMenu);
+    menuTitle.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleMenu();
+      }
+    });
+  });
+
+  document.getElementById('menu-toggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('sidebar');
+    var isOpen = sidebar.classList.toggle('show');
+    this.setAttribute('aria-expanded', isOpen);
+  });
+</script>
 </body>
 </html>
