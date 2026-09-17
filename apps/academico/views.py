@@ -110,13 +110,14 @@ def notas(request):
             nota_3=request.POST.get('nota_3') or None,
             media=media,
             situacao=situacao,
+            escola=request.user.perfil.escola
         )
         return redirect('notas')
 
     return render(request, 'academico/notas.html', {
         'notas': Notas.objects.select_related('estudante', 'disciplina').order_by('-id_notas'),
-        'estudantes': Estudantes.objects.filter(status='Ativo').order_by('nome'),
-        'disciplinas': Disciplinas.objects.filter(status='Ativa').order_by('nome'),
+        'estudantes': Estudantes.objects.filter(status='Ativo', escola=request.user.perfil.escola).order_by('nome'),
+        'disciplinas': Disciplinas.objects.filter(status='Ativa', escola=request.user.perfil.escola).order_by('nome'),
     })
 
 @login_required

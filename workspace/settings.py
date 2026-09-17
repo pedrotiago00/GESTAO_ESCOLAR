@@ -45,11 +45,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.academico',
     'apps.cadastros',
-    'apps.financeiro',
     'apps.comunicacao',
-    'apps.administrativo',
-    'apps.patrimonio',
-    'apps.sistema',
     'apps.usuarios',
 ]
 

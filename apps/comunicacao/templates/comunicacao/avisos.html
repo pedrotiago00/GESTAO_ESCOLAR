@@ -21,90 +21,45 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Comunicação / Avisos</div><h2>Mural de Avisos</h2></div>
-    <button class="btn btn-primary">+ Novo Aviso</button>
+    <button type="button" class="btn btn-primary" id="open-aviso-modal">+ Novo Aviso</button>
   </div>
   <div class="grid-2">
-    
+    {% for aviso in avisos %}
       <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
         <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-          <span class="badge badge-info">Direção</span>
-          <small style="color:#6b7280;">📅 Hoje</small>
+          <span class="badge badge-info">Aviso</span>
+          <small style="color:#6b7280;">📅 {{ aviso.data_criacao|date:"d/m/Y H:i" }}</small>
         </div>
-        <h3 style="margin-bottom:10px; color:#1f2937;">Reunião de Pais e Mestres</h3>
-        <p style="color:#6b7280; font-size:14px; line-height:1.6;">10/09/2026 às 19h no auditório principal. Pauta: resultados do 2º bimestre.</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
-          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
-        </div>
+        <h3 style="margin-bottom:10px; color:#1f2937;">{{ aviso.titulo }}</h3>
+        <p style="color:#6b7280; font-size:14px; line-height:1.6;">{{ aviso.descricao }}</p>
+        {% if aviso.data_expiracao %}<small style="color:#6b7280;">Expira em {{ aviso.data_expiracao|date:"d/m/Y H:i" }}</small>{% endif %}
       </div>
-    
-      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-          <span class="badge badge-success">Coordenação</span>
-          <small style="color:#6b7280;">📅 Hoje</small>
-        </div>
-        <h3 style="margin-bottom:10px; color:#1f2937;">Feira de Ciências 2026</h3>
-        <p style="color:#6b7280; font-size:14px; line-height:1.6;">Dia 20/09 - Inscrições abertas até 15/09. Temas livres, grupos de até 5 alunos.</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
-          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
-        </div>
-      </div>
-    
-      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-          <span class="badge badge-warning">Administração</span>
-          <small style="color:#6b7280;">📅 Hoje</small>
-        </div>
-        <h3 style="margin-bottom:10px; color:#1f2937;">Manutenção da Quadra</h3>
-        <p style="color:#6b7280; font-size:14px; line-height:1.6;">A quadra esportiva ficará interditada de 12 a 15/09 para reforma do piso.</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
-          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
-        </div>
-      </div>
-    
-      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-          <span class="badge badge-info">Biblioteca</span>
-          <small style="color:#6b7280;">📅 Hoje</small>
-        </div>
-        <h3 style="margin-bottom:10px; color:#1f2937;">Novo Horário de Biblioteca</h3>
-        <p style="color:#6b7280; font-size:14px; line-height:1.6;">A partir de outubro, biblioteca funcionará das 7h às 20h de segunda a sexta.</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
-          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
-        </div>
-      </div>
-    
-      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-          <span class="badge badge-success">Ed. Física</span>
-          <small style="color:#6b7280;">📅 Hoje</small>
-        </div>
-        <h3 style="margin-bottom:10px; color:#1f2937;">Campeonato Interclasses</h3>
-        <p style="color:#6b7280; font-size:14px; line-height:1.6;">Inscrições abertas para futebol, vôlei e basquete. Início das partidas em 25/09.</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
-          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
-        </div>
-      </div>
-    
-      <div class="panel" style="border-left:4px solid; border-color: var(--c, #3b82f6);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-          <span class="badge badge-danger">Coordenação</span>
-          <small style="color:#6b7280;">📅 Hoje</small>
-        </div>
-        <h3 style="margin-bottom:10px; color:#1f2937;">Simulado ENEM</h3>
-        <p style="color:#6b7280; font-size:14px; line-height:1.6;">Dia 18/09 - 3º ano do EM. Presença obrigatória. Início às 8h.</p>
-        <div style="margin-top:15px; display:flex; gap:10px;">
-          <button class="btn btn-sm btn-primary">📖 Ler mais</button>
-          <button class="btn btn-sm btn-secondary">💬 Comentar</button>
-        </div>
-      </div>
-    
+    {% empty %}
+      <p>Nenhum aviso cadastrado.</p>
+    {% endfor %}
   </div>
 
 </main>
+<div class="modal" id="aviso-modal" role="dialog" aria-modal="true" aria-labelledby="aviso-modal-title">
+  <div class="modal-content">
+  <div class="modal-header"><h3 id="aviso-modal-title">Cadastrar novo aviso</h3><button type="button" class="modal-close" id="close-aviso-modal" aria-label="Fechar">&times;</button></div>
+  <form method="post" class="turma-form">
+    {% csrf_token %}
+    <div class="form-group"><label for="aviso-titulo">Título</label><input id="aviso-titulo" name="titulo" type="text" required></div>
+    <div class="form-group"><label for="aviso-descricao">Descrição</label><textarea id="aviso-descricao" name="descricao" rows="4" required></textarea></div>
+    <div class="form-group"><label for="aviso-expiracao">Data de expiração</label><input id="aviso-expiracao" name="data_expiracao" type="datetime-local"></div>
+    <div class="modal-actions"><button type="button" class="btn btn-secondary" id="cancel-aviso-modal">Cancelar</button><button type="submit" class="btn btn-primary">Salvar aviso</button></div>
+  </form>
+  </div>
+</div>
+<script>
+  const avisoModal = document.getElementById('aviso-modal');
+  function toggleAvisoModal(show) { avisoModal.classList.toggle('show', show); if (show) document.getElementById('aviso-titulo').focus(); }
+  document.getElementById('open-aviso-modal').addEventListener('click', () => toggleAvisoModal(true));
+  document.getElementById('close-aviso-modal').addEventListener('click', () => toggleAvisoModal(false));
+  document.getElementById('cancel-aviso-modal').addEventListener('click', () => toggleAvisoModal(false));
+  avisoModal.addEventListener('click', (event) => { if (event.target === avisoModal) toggleAvisoModal(false); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') toggleAvisoModal(false); });
+</script>
 </body>
 </html>

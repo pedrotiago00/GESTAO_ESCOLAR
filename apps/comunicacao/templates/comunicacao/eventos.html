@@ -21,25 +21,41 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Comunicação / Eventos</div><h2>Eventos</h2></div>
-    <button class="btn btn-primary">+ Novo Evento</button>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><h3>📅 Setembro 2026</h3></div>
-    <div class="calendar">
-      <div class="cal-header">Dom</div><div class="cal-header">Seg</div><div class="cal-header">Ter</div><div class="cal-header">Qua</div><div class="cal-header">Qui</div><div class="cal-header">Sex</div><div class="cal-header">Sáb</div>
-      <div class="cal-day "><div class="day-num">1</div></div><div class="cal-day "><div class="day-num">2</div></div><div class="cal-day "><div class="day-num">3</div></div><div class="cal-day "><div class="day-num">4</div></div><div class="cal-day has-event"><div class="day-num">5</div><span class="event">Reunião Pais</span></div><div class="cal-day "><div class="day-num">6</div></div><div class="cal-day "><div class="day-num">7</div></div><div class="cal-day today"><div class="day-num">8</div></div><div class="cal-day "><div class="day-num">9</div></div><div class="cal-day has-event"><div class="day-num">10</div><span class="event">Conselho</span></div><div class="cal-day "><div class="day-num">11</div></div><div class="cal-day "><div class="day-num">12</div></div><div class="cal-day "><div class="day-num">13</div></div><div class="cal-day "><div class="day-num">14</div></div><div class="cal-day has-event"><div class="day-num">15</div><span class="event">Feira</span></div><div class="cal-day "><div class="day-num">16</div></div><div class="cal-day "><div class="day-num">17</div></div><div class="cal-day has-event"><div class="day-num">18</div><span class="event">Simulado</span></div><div class="cal-day "><div class="day-num">19</div></div><div class="cal-day has-event"><div class="day-num">20</div><span class="event">Interclasses</span></div><div class="cal-day "><div class="day-num">21</div></div><div class="cal-day "><div class="day-num">22</div></div><div class="cal-day "><div class="day-num">23</div></div><div class="cal-day "><div class="day-num">24</div></div><div class="cal-day has-event"><div class="day-num">25</div><span class="event">Fechamento</span></div><div class="cal-day "><div class="day-num">26</div></div><div class="cal-day "><div class="day-num">27</div></div><div class="cal-day "><div class="day-num">28</div></div><div class="cal-day "><div class="day-num">29</div></div><div class="cal-day "><div class="day-num">30</div></div>
-    </div>
+    <button type="button" class="btn btn-primary" id="open-evento-modal">+ Novo Evento</button>
   </div>
   <div class="panel">
     <div class="panel-header"><h3>🎯 Próximos Eventos</h3></div>
     <div class="timeline">
-      <div class="timeline-item"><h4>Reunião de Pais e Mestres</h4><p>Auditório principal - 19h. Público: todos os responsáveis.</p><div class="time">📅 10/09/2026</div></div>
-      <div class="timeline-item"><h4>Conselho de Classe</h4><p>Sala dos professores - 14h. Participação de todos os docentes.</p><div class="time">📅 10/09/2026</div></div>
-      <div class="timeline-item"><h4>Feira de Ciências 2026</h4><p>Pátio central - Dia inteiro. Aberto à comunidade.</p><div class="time">📅 20/09/2026</div></div>
-      <div class="timeline-item"><h4>Campeonato Interclasses</h4><p>Quadra esportiva - Início das 8h. Vários esportes.</p><div class="time">📅 25/09/2026</div></div>
+      {% for evento in eventos %}
+        <div class="timeline-item"><h4>{{ evento.titulo }}</h4><p>{{ evento.descricao }}<br>Local: {{ evento.local }}</p><div class="time">📅 {{ evento.data_evento|date:"d/m/Y H:i" }}</div></div>
+      {% empty %}
+        <p>Nenhum evento cadastrado.</p>
+      {% endfor %}
     </div>
   </div>
 
 </main>
+<div class="modal" id="evento-modal" role="dialog" aria-modal="true" aria-labelledby="evento-modal-title">
+  <div class="modal-content">
+  <div class="modal-header"><h3 id="evento-modal-title">Cadastrar novo evento</h3><button type="button" class="modal-close" id="close-evento-modal" aria-label="Fechar">&times;</button></div>
+  <form method="post" class="turma-form">
+    {% csrf_token %}
+    <div class="form-group"><label for="evento-titulo">Título</label><input id="evento-titulo" name="titulo" type="text" required></div>
+    <div class="form-group"><label for="evento-descricao">Descrição</label><textarea id="evento-descricao" name="descricao" rows="4" required></textarea></div>
+    <div class="form-group"><label for="evento-data">Data e hora</label><input id="evento-data" name="data_evento" type="datetime-local" required></div>
+    <div class="form-group"><label for="evento-local">Local</label><input id="evento-local" name="local" type="text" required></div>
+    <div class="modal-actions"><button type="button" class="btn btn-secondary" id="cancel-evento-modal">Cancelar</button><button type="submit" class="btn btn-primary">Salvar evento</button></div>
+  </form>
+  </div>
+</div>
+<script>
+  const eventoModal = document.getElementById('evento-modal');
+  function toggleEventoModal(show) { eventoModal.classList.toggle('show', show); if (show) document.getElementById('evento-titulo').focus(); }
+  document.getElementById('open-evento-modal').addEventListener('click', () => toggleEventoModal(true));
+  document.getElementById('close-evento-modal').addEventListener('click', () => toggleEventoModal(false));
+  document.getElementById('cancel-evento-modal').addEventListener('click', () => toggleEventoModal(false));
+  eventoModal.addEventListener('click', (event) => { if (event.target === eventoModal) toggleEventoModal(false); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') toggleEventoModal(false); });
+</script>
 </body>
 </html>

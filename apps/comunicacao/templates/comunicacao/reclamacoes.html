@@ -21,27 +21,49 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Comunicação / Reclamações</div><h2>Reclamações e Sugestões</h2></div>
+    <button type="button" class="btn btn-primary" id="open-reclamacao-modal">+ Nova Reclamação</button>
   </div>
   <div class="stats-grid">
-    <div class="stat-card red"><div class="stat-info"><h3>Abertas</h3><div class="value">8</div></div><div class="stat-icon">📬</div></div>
-    <div class="stat-card orange"><div class="stat-info"><h3>Em Análise</h3><div class="value">5</div></div><div class="stat-icon">🔍</div></div>
-    <div class="stat-card green"><div class="stat-info"><h3>Resolvidas (mês)</h3><div class="value">23</div></div><div class="stat-icon">✅</div></div>
-    <div class="stat-card blue"><div class="stat-info"><h3>Tempo Médio</h3><div class="value">2.3 dias</div></div><div class="stat-icon">⏱️</div></div>
+    <div class="stat-card red"><div class="stat-info"><h3>Abertas</h3><div class="value">{{ abertas }}</div></div><div class="stat-icon">📬</div></div>
+    <div class="stat-card orange"><div class="stat-info"><h3>Em andamento</h3><div class="value">{{ em_andamento }}</div></div><div class="stat-icon">🔍</div></div>
+    <div class="stat-card green"><div class="stat-info"><h3>Resolvidas</h3><div class="value">{{ resolvidas }}</div></div><div class="stat-icon">✅</div></div>
   </div>
   <div class="panel">
     <div class="table-container">
       <table>
         <thead><tr><th>Protocolo</th><th>Data</th><th>Autor</th><th>Categoria</th><th>Assunto</th><th>Status</th><th>Ações</th></tr></thead>
         <tbody>
-          <tr><td>#REC-2026-045</td><td>08/09/2026</td><td>Maria Oliveira</td><td>Infraestrutura</td><td>Ar condicionado da sala 101</td><td><span class="badge badge-danger">Aberta</span></td><td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-success">✓ Resolver</button></td></tr>
-          <tr><td>#REC-2026-044</td><td>07/09/2026</td><td>Carlos Silva</td><td>Pedagógico</td><td>Dificuldade em matemática</td><td><span class="badge badge-warning">Em análise</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
-          <tr><td>#REC-2026-043</td><td>06/09/2026</td><td>Anônimo</td><td>Alimentação</td><td>Qualidade da merenda</td><td><span class="badge badge-warning">Em análise</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
-          <tr><td>#REC-2026-042</td><td>05/09/2026</td><td>Juliana Souza</td><td>Comunicação</td><td>Avisos não recebidos</td><td><span class="badge badge-success">Resolvida</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          {% for reclamacao in reclamacoes %}
+            <tr><td>#{{ reclamacao.id }}</td><td>{{ reclamacao.data_reclamacao|date:"d/m/Y" }}</td><td>Não informado</td><td>Não informado</td><td>{{ reclamacao.titulo }}</td><td><span class="badge badge-warning">{{ reclamacao.status }}</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          {% empty %}
+            <tr><td colspan="7">Nenhuma reclamação cadastrada.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<div class="modal" id="reclamacao-modal" role="dialog" aria-modal="true" aria-labelledby="reclamacao-modal-title">
+  <div class="modal-content">
+  <div class="modal-header"><h3 id="reclamacao-modal-title">Nova reclamação ou sugestão</h3><button type="button" class="modal-close" id="close-reclamacao-modal" aria-label="Fechar">&times;</button></div>
+  <form method="post" class="turma-form">
+    {% csrf_token %}
+    <div class="form-group"><label for="reclamacao-titulo">Assunto</label><input id="reclamacao-titulo" name="titulo" type="text" required></div>
+    <div class="form-group"><label for="reclamacao-descricao">Descrição</label><textarea id="reclamacao-descricao" name="descricao" rows="4" required></textarea></div>
+    <div class="form-group"><label for="reclamacao-status">Status</label><select id="reclamacao-status" name="status"><option value="Aberta">Aberta</option><option value="Em andamento">Em andamento</option><option value="Resolvida">Resolvida</option></select></div>
+    <div class="modal-actions"><button type="button" class="btn btn-secondary" id="cancel-reclamacao-modal">Cancelar</button><button type="submit" class="btn btn-primary">Salvar reclamação</button></div>
+  </form>
+  </div>
+</div>
+<script>
+  const reclamacaoModal = document.getElementById('reclamacao-modal');
+  function toggleReclamacaoModal(show) { reclamacaoModal.classList.toggle('show', show); if (show) document.getElementById('reclamacao-titulo').focus(); }
+  document.getElementById('open-reclamacao-modal').addEventListener('click', () => toggleReclamacaoModal(true));
+  document.getElementById('close-reclamacao-modal').addEventListener('click', () => toggleReclamacaoModal(false));
+  document.getElementById('cancel-reclamacao-modal').addEventListener('click', () => toggleReclamacaoModal(false));
+  reclamacaoModal.addEventListener('click', (event) => { if (event.target === reclamacaoModal) toggleReclamacaoModal(false); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') toggleReclamacaoModal(false); });
+</script>
 </body>
 </html>

@@ -21,23 +21,47 @@
 
   <div class="page-header">
     <div><div class="breadcrumb">Comunicação / Reuniões</div><h2>Reuniões</h2></div>
-    <button class="btn btn-primary">+ Agendar Reunião</button>
+    <button type="button" class="btn btn-primary" id="open-reuniao-modal">+ Agendar Reunião</button>
   </div>
   <div class="panel">
     <div class="table-container">
       <table>
         <thead><tr><th>Data/Hora</th><th>Título</th><th>Tipo</th><th>Local</th><th>Participantes</th><th>Status</th><th>Ações</th></tr></thead>
         <tbody>
-          <tr><td>10/09/2026 19:00</td><td>Reunião de Pais</td><td>Pais/Professores</td><td>Auditório</td><td>350</td><td><span class="badge badge-warning">Agendada</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
-          <tr><td>10/09/2026 14:00</td><td>Conselho de Classe</td><td>Pedagógica</td><td>Sala Prof.</td><td>89</td><td><span class="badge badge-warning">Agendada</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
-          <tr><td>15/09/2026 10:00</td><td>Reunião Pedagógica</td><td>Pedagógica</td><td>Sala Prof.</td><td>89</td><td><span class="badge badge-info">Planejada</span></td><td><button class="btn btn-sm btn-warning">✏️</button></td></tr>
-          <tr><td>05/09/2026 15:00</td><td>Reunião Administrativa</td><td>Administrativa</td><td>Diretoria</td><td>12</td><td><span class="badge badge-success">Realizada</span></td><td><button class="btn btn-sm btn-primary">📄 Ata</button></td></tr>
-          <tr><td>01/09/2026 19:00</td><td>Reunião de Pais - 9º ano</td><td>Pais/Professores</td><td>Auditório</td><td>120</td><td><span class="badge badge-success">Realizada</span></td><td><button class="btn btn-sm btn-primary">📄 Ata</button></td></tr>
+          {% for reuniao in reunioes %}
+            <tr><td>{{ reuniao.data_reuniao|date:"d/m/Y H:i" }}</td><td>{{ reuniao.titulo }}</td><td>Reunião</td><td>{{ reuniao.local }}</td><td>{{ reuniao.participantes }}</td><td><span class="badge badge-warning">{{ reuniao.status }}</span></td><td><button class="btn btn-sm btn-primary">👁️</button></td></tr>
+          {% empty %}
+            <tr><td colspan="7">Nenhuma reunião cadastrada.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 
 </main>
+<div class="modal" id="reuniao-modal" role="dialog" aria-modal="true" aria-labelledby="reuniao-modal-title">
+  <div class="modal-content">
+  <div class="modal-header"><h3 id="reuniao-modal-title">Agendar reunião</h3><button type="button" class="modal-close" id="close-reuniao-modal" aria-label="Fechar">&times;</button></div>
+  <form method="post" class="turma-form">
+    {% csrf_token %}
+    <div class="form-group"><label for="reuniao-titulo">Título</label><input id="reuniao-titulo" name="titulo" type="text" required></div>
+    <div class="form-group"><label for="reuniao-descricao">Descrição</label><textarea id="reuniao-descricao" name="descricao" rows="4" required></textarea></div>
+    <div class="form-group"><label for="reuniao-data">Data e hora</label><input id="reuniao-data" name="data_reuniao" type="datetime-local" required></div>
+    <div class="form-group"><label for="reuniao-local">Local</label><input id="reuniao-local" name="local" type="text" required></div>
+    <div class="form-group"><label for="reuniao-participantes">Participantes</label><input id="reuniao-participantes" name="participantes" type="number" min="0" value="0" required></div>
+    <div class="form-group"><label for="reuniao-status">Status</label><select id="reuniao-status" name="status"><option value="Agendada">Agendada</option><option value="Concluída">Concluída</option><option value="Cancelada">Cancelada</option></select></div>
+    <div class="modal-actions"><button type="button" class="btn btn-secondary" id="cancel-reuniao-modal">Cancelar</button><button type="submit" class="btn btn-primary">Salvar reunião</button></div>
+  </form>
+  </div>
+</div>
+<script>
+  const reuniaoModal = document.getElementById('reuniao-modal');
+  function toggleReuniaoModal(show) { reuniaoModal.classList.toggle('show', show); if (show) document.getElementById('reuniao-titulo').focus(); }
+  document.getElementById('open-reuniao-modal').addEventListener('click', () => toggleReuniaoModal(true));
+  document.getElementById('close-reuniao-modal').addEventListener('click', () => toggleReuniaoModal(false));
+  document.getElementById('cancel-reuniao-modal').addEventListener('click', () => toggleReuniaoModal(false));
+  reuniaoModal.addEventListener('click', (event) => { if (event.target === reuniaoModal) toggleReuniaoModal(false); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') toggleReuniaoModal(false); });
+</script>
 </body>
 </html>

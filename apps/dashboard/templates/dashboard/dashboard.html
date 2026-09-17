@@ -53,19 +53,6 @@
 
       <div class="menu-item">
         <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
-          <span>💰 Financeiro</span><span class="arrow">▶</span>
-        </div>
-        <div class="submenu">
-          <a href="{% url 'financeiro' %}">Visão geral</a>
-          <a href="{% url 'taxas' %}">Taxas</a>
-          <a href="{% url 'cobrancas' %}">Cobranças</a>
-          <a href="{% url 'atrasos' %}">Atrasos</a>
-          <a href="{% url 'resumo' %}">Resumo financeiro</a>
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
           <span>📣 Comunicação</span><span class="arrow">▶</span>
         </div>
         <div class="submenu">
@@ -103,30 +90,16 @@
         </div>
       </div>
 
-      <div class="menu-item">
-        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
-          <span>⚙️ Sistema</span><span class="arrow">▶</span>
-        </div>
-        <div class="submenu">
-          <a href="{% url 'sistema' %}">Visão geral</a>
-          <a href="{% url 'usuarios' %}">Usuários</a>
-          <a href="{% url 'permissoes' %}">Permissões</a>
-          <a href="{% url 'kpis' %}">KPIs</a>
-          <a href="{% url 'relatorios' %}">Relatórios</a>
-          <a href="{% url 'configuracoes' %}">Configurações</a>
-          <a href="{% url 'perfil' %}">Meu perfil</a>
-        </div>
-      </div>
     </nav>
   </aside>
 
   <div class="main">
     <header class="header">
       <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">☰</button>
-      <h1>Visão geral</h1>
+      <h1>{{ escola.nome }}</h1>
       <div class="user-info">
         <div class="user-avatar">👤</div>
-        <span>Gestão Escolar</span>
+        <span>{{ request.user.get_full_name|default:request.user.username }}</span>
       </div>
     </header>
 
@@ -135,51 +108,53 @@
   <div class="page-header">
     <div>
       <div class="breadcrumb">Início / Dashboard</div>
-      <h2>Visão Geral</h2>
-    </div>
-    <div>
-      <button class="btn btn-primary">📥 Exportar Relatório</button>
+      <h2>Visão geral de {{ escola.nome }}</h2>
     </div>
   </div>
 
   <div class="stats-grid">
     <div class="stat-card blue">
       <div class="stat-info">
-        <h3>Total de Alunos</h3>
-        <div class="value">1.247</div>
-        <div class="change up">↑ 5.2% este mês</div>
+        <h3>Estudantes</h3>
+        <div class="value">{{ total_estudantes }}</div>
+        <div class="change">{{ estudantes_ativos }} ativos</div>
       </div>
       <div class="stat-icon">👨‍🎓</div>
     </div>
     <div class="stat-card green">
       <div class="stat-info">
-        <h3>Professores Ativos</h3>
-        <div class="value">89</div>
-        <div class="change up">↑ 2 novos</div>
+        <h3>Professores ativos</h3>
+        <div class="value">{{ professores_ativos }}</div>
+        <div class="change">cadastrados no banco</div>
       </div>
       <div class="stat-icon">👨‍🏫</div>
     </div>
     <div class="stat-card orange">
       <div class="stat-info">
-        <h3>Turmas Ativas</h3>
-        <div class="value">42</div>
-        <div class="change up">↑ 3 este semestre</div>
+        <h3>Turmas</h3>
+        <div class="value">{{ total_turmas }}</div>
+        <div class="change">cadastradas no banco</div>
       </div>
       <div class="stat-icon">🏫</div>
     </div>
-    <div class="stat-card red">
-      <div class="stat-info">
-        <h3>Inadimplência</h3>
-        <div class="value">R$ 45.2k</div>
-        <div class="change down">↓ 2.1% este mês</div>
-      </div>
-      <div class="stat-icon">💸</div>
-    </div>
     <div class="stat-card purple">
       <div class="stat-info">
-        <h3>Frequência Média</h3>
-        <div class="value">92.4%</div>
-        <div class="change up">↑ 1.8%</div>
+        <h3>Disciplinas ativas</h3>
+        <div class="value">{{ disciplinas_ativas }}</div>
+        <div class="change">cadastradas no banco</div>
+      </div>
+      <div class="stat-icon">📚</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-info">
+        <h3>Frequência média</h3>
+        {% if frequencia_media is not None %}
+          <div class="value">{{ frequencia_media|floatformat:1 }}%</div>
+          <div class="change">calculada pelos registros</div>
+        {% else %}
+          <div class="value">-</div>
+          <div class="change">sem registros</div>
+        {% endif %}
       </div>
       <div class="stat-icon">📊</div>
     </div>
@@ -187,56 +162,57 @@
 
   <div class="grid-2">
     <div class="panel">
-      <div class="panel-header"><h3>📈 Desempenho Acadêmico por Mês</h3></div>
-      <div class="chart-bar">
-        <div class="bar" style="height: 60%" data-value="60%"></div>
-        <div class="bar" style="height: 75%" data-value="75%"></div>
-        <div class="bar" style="height: 68%" data-value="68%"></div>
-        <div class="bar" style="height: 82%" data-value="82%"></div>
-        <div class="bar" style="height: 78%" data-value="78%"></div>
-        <div class="bar" style="height: 88%" data-value="88%"></div>
-        <div class="bar" style="height: 92%" data-value="92%"></div>
-      </div>
+      <div class="panel-header"><h3>📈 Desempenho acadêmico</h3></div>
+      {% if media_notas is not None %}
+        <div class="stat-info">
+          <h3>Média geral das notas lançadas</h3>
+          <div class="value">{{ media_notas|floatformat:1 }}</div>
+        </div>
+      {% else %}
+        <div class="empty-state">Ainda não há notas lançadas.</div>
+      {% endif %}
     </div>
     <div class="panel">
       <div class="panel-header"><h3>🎯 Próximos Eventos</h3></div>
-      <div class="timeline">
-        <div class="timeline-item">
-          <h4>Reunião de Pais</h4>
-          <p>Auditório principal - 19h</p>
-          <div class="time">📅 10/09/2026</div>
+      {% if proximos_exames %}
+        <div class="timeline">
+          {% for exame in proximos_exames %}
+            <div class="timeline-item">
+              <h4>{{ exame.disciplina.nome }} - {{ exame.turma.serie }}</h4>
+              <p>{{ exame.tipo }} · {{ exame.status }} · Prof. {{ exame.professor.nome }}</p>
+              <div class="time">📅 {{ exame.data|date:"d/m/Y" }}</div>
+            </div>
+          {% endfor %}
         </div>
-        <div class="timeline-item">
-          <h4>Prova de Matemática - 9º ano</h4>
-          <p>Conteúdo: Equações de 2º grau</p>
-          <div class="time">📅 12/09/2026</div>
-        </div>
-        <div class="timeline-item">
-          <h4>Feira de Ciências</h4>
-          <p>Pátio central - Dia inteiro</p>
-          <div class="time">📅 20/09/2026</div>
-        </div>
-      </div>
+      {% else %}
+        <div class="empty-state">Não há exames futuros cadastrados.</div>
+      {% endif %}
     </div>
   </div>
 
   <div class="panel">
     <div class="panel-header">
-      <h3>🔔 Atividades Recentes</h3>
-      <button class="btn btn-sm btn-secondary">Ver todas</button>
+      <h3>👨‍🎓 Estudantes cadastrados recentemente</h3>
     </div>
-    <div class="table-container">
-      <table>
-        <thead><tr><th>Usuário</th><th>Ação</th><th>Local</th><th>Data/Hora</th></tr></thead>
-        <tbody>
-          <tr><td>Maria Silva</td><td>Matriculou aluno</td><td>Estudantes</td><td>08/09/2026 14:32</td></tr>
-          <tr><td>João Santos</td><td>Lançou notas</td><td>Notas - 8º A</td><td>08/09/2026 13:15</td></tr>
-          <tr><td>Ana Costa</td><td>Emitiu boleto</td><td>Cobranças</td><td>08/09/2026 11:48</td></tr>
-          <tr><td>Pedro Lima</td><td>Registrou frequência</td><td>Frequência - 7º B</td><td>08/09/2026 10:22</td></tr>
-          <tr><td>Carla Mendes</td><td>Criou aviso</td><td>Comunicação</td><td>08/09/2026 09:05</td></tr>
-        </tbody>
-      </table>
-    </div>
+    {% if estudantes_recentes %}
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Nome</th><th>Matrícula</th><th>Turma</th><th>Status</th></tr></thead>
+          <tbody>
+            {% for estudante in estudantes_recentes %}
+              <tr>
+                <td>{{ estudante.nome }}</td>
+                <td>{{ estudante.matricula }}</td>
+                <td>{{ estudante.turma.serie }} - {{ estudante.turma.turno }}</td>
+                <td>{{ estudante.status }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">Não há estudantes cadastrados.</div>
+    {% endif %}
   </div>
 
     </main>
