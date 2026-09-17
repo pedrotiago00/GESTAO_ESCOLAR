@@ -7,9 +7,13 @@ from django.utils import timezone
 from .models import Exames, Frequencia, Horarios, Notas
 from apps.cadastros.models import Disciplinas, Estudantes, Professores, Turmas
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def academico(request):
     return render(request, 'academico/index.html')
 
+@login_required
 def horarios(request):
     if request.method == 'POST':
         Horarios.objects.create(
@@ -19,6 +23,7 @@ def horarios(request):
             turma_id=request.POST.get('turma'),
             disciplina_id=request.POST.get('disciplina'),
             professor_id=request.POST.get('professor'),
+            escola=request.user.perfil.escola
         )
         return redirect('horarios')
 
@@ -27,11 +32,12 @@ def horarios(request):
     ).order_by('dia_semana', 'hora_inicio')
     return render(request, 'academico/horarios.html', {
         'horarios': horarios,
-        'turmas': Turmas.objects.all().order_by('serie', 'turno'),
+        'turmas': Turmas.objects.filter(escola=request.user.perfil.escola).order_by('serie', 'turno'),
         'disciplinas': Disciplinas.objects.filter(status='Ativa').order_by('nome'),
         'professores': Professores.objects.filter(status='Ativo').order_by('nome'),
     })
 
+@login_required
 def frequencia(request):
     if request.method == 'POST':
         Frequencia.objects.create(
@@ -45,12 +51,13 @@ def frequencia(request):
 
     return render(request, 'academico/frequencia.html', {
         'frequencias': Frequencia.objects.select_related('estudante').order_by('-data'),
-        'estudantes': Estudantes.objects.filter(status='Ativo').order_by('nome'),
+        'estudantes': Estudantes.objects.filter(status='Ativo', escola=request.user.perfil.escola).order_by('nome'),
         'presentes': Frequencia.objects.filter(presente=True).count(),
         'atrasos': Frequencia.objects.filter(atraso=True).count(),
         'faltas': Frequencia.objects.filter(falta=True).count(),
     })
 
+@login_required
 def exames(request):
     if request.method == 'POST':
         Exames.objects.create(
@@ -60,6 +67,7 @@ def exames(request):
             professor_id=request.POST.get('professor'),
             tipo=request.POST.get('tipo', '').strip(),
             status=request.POST.get('status', 'Agendado').strip(),
+            escola=request.user.perfil.escola
         )
         return redirect('exames')
 
@@ -69,8 +77,8 @@ def exames(request):
     hoje = timezone.localdate()
     return render(request, 'academico/exames.html', {
         'exames': exames,
-        'disciplinas': Disciplinas.objects.filter(status='Ativa').order_by('nome'),
-        'turmas': Turmas.objects.all().order_by('serie', 'turno'),
+        'disciplinas': Disciplinas.objects.filter(status='Ativa', escola=request.user.perfil.escola).order_by('nome'),
+        'turmas': Turmas.objects.filter(escola=request.user.perfil.escola).order_by('serie', 'turno'),
         'professores': Professores.objects.filter(status='Ativo').order_by('nome'),
         'agendados': exames.filter(status='Agendado').count(),
         'realizados': exames.filter(status='Realizado').count(),
@@ -80,6 +88,7 @@ def exames(request):
         'recuperacoes': exames.filter(tipo__icontains='recuper').count(),
     })
 
+@login_required
 def notas(request):
     if request.method == 'POST':
         notas = [
@@ -110,8 +119,10 @@ def notas(request):
         'disciplinas': Disciplinas.objects.filter(status='Ativa').order_by('nome'),
     })
 
+@login_required
 def planejamento(request):
     return render(request, 'academico/planejamento.html')
 
+@login_required
 def diario_de_classe(request):
     return render(request, 'academico/diario.html')
