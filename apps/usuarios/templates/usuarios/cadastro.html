@@ -63,6 +63,16 @@
         </div>
 
         <div class="form-group">
+          <label for="funcao">Função</label>
+          <select id="funcao" name="funcao" required>
+            <option value="">Selecione a função</option>
+            {% for funcao in form.funcao.field.queryset %}
+              <option value="{{ funcao.pk }}" {% if request.POST.funcao == funcao.pk|stringformat:'s' %}selected{% endif %}>{{ funcao.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="password">Senha</label>
           <input id="password" name="password" type="password" placeholder="Crie uma senha" required>
         </div>

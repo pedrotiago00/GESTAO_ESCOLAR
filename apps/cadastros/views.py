@@ -3,12 +3,14 @@ from django.shortcuts import redirect
 
 from .models import Estudantes, Professores, Responsaveis, Turmas, Disciplinas
 from django.contrib.auth.decorators import login_required
+from apps.usuarios.decorators import funcao_requerida
 
 @login_required
 def cadastros(request):
     return render(request, 'cadastros/index.html')
 
 @login_required
+@funcao_requerida('Diretor')
 def turmas(request):
     if request.method == 'POST':
         Turmas.objects.create(
@@ -77,6 +79,7 @@ def estudantes(request):
     })
 
 @login_required
+@funcao_requerida('Diretor')
 def professores(request):
     if request.method == 'POST':
         Professores.objects.create(

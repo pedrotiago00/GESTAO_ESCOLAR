@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import LoginForms, CadastroForms
-from .models import PerfilUsuario
+from .models import Funcao, PerfilUsuario
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
 
@@ -39,11 +39,12 @@ def cadastro(request):
         senha = request.POST.get('password', '')
         confirmar_senha = request.POST.get('password_confirm', '')
         escola_id = request.POST.get('escola')
+        funcao_id = request.POST.get('funcao')
         termos = request.POST.get('termos')
 
         erros = []
 
-        if not nome or not email or not senha or not confirmar_senha or not escola_id:
+        if not nome or not email or not senha or not confirmar_senha or not escola_id or not funcao_id:
             erros.append('Preencha todos os campos obrigatórios.')
         elif senha != confirmar_senha:
             erros.append('As senhas não conferem.')
@@ -66,6 +67,7 @@ def cadastro(request):
         PerfilUsuario.objects.create(
             usuario=usuario,
             escola_id=escola_id,
+            funcao_id=funcao_id,
         )
 
         return redirect('login')

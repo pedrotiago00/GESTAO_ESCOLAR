@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import Escola, PerfilUsuario
+from .models import Escola, Funcao, PerfilUsuario
+
+
+@admin.register(Funcao)
+class FuncaoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'descricao')
+    search_fields = ('nome', 'descricao')
 
 @admin.register(Escola)
 class EscolaAdmin(admin.ModelAdmin):
@@ -12,7 +18,7 @@ class EscolaAdmin(admin.ModelAdmin):
 
 @admin.register(PerfilUsuario)
 class PerfilUsuarioAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'escola')
-    list_filter = ('escola',)
+    list_display = ('usuario', 'escola', 'funcao')
+    list_filter = ('escola', 'funcao')
     search_fields = ('usuario__username', 'escola__nome')
     raw_id_fields = ('usuario',)

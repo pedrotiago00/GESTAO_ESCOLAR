@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Escola
+from .models import Escola, Funcao
 
 class LoginForms(forms.Form):
     username = forms.CharField(
@@ -34,6 +34,13 @@ class CadastroForms(forms.Form):
         required=True,
     )
 
+    funcao = forms.ModelChoiceField(
+        label='Função',
+        queryset=Funcao.objects.order_by('nome'),
+        empty_label='Selecione a função',
+        required=True,
+    )
+
     password = forms.CharField(
         label='Senha',
         max_length=70,
@@ -45,3 +52,13 @@ class CadastroForms(forms.Form):
         max_length=70,
         widget=forms.PasswordInput,
         required=True)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password_confirm = cleaned_data.get('password_confirm')
+
+        if password and password_confirm and password != password_confirm:
+            self.add_error('password_confirm', 'As senhas não conferem.')
+
+        return cleaned_data
