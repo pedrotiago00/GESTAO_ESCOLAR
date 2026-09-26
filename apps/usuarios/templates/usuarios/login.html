@@ -1,69 +1,58 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entrar - Gestão Escolar</title>
-{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar — Sistema de Gestão Escolar | SME Caratinga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-  <div class="container_principal">
-    <div class="container_painel">
-      <div class="auth-brand-content">
-        <img src="{% static 'image/logo_sme.jpeg' %}" alt="Logo SME">
-        <p>Sistema completo de gestão escolar: acadêmico, financeiro, comunicação, administrativo, patrimônio e muito mais em um só lugar.</p>
-        <ul class="auth-brand-list">
-          <li>✅ Controle acadêmico completo</li>
-          <li>✅ Gestão financeira integrada</li>
-          <li>✅ Comunicação direta com pais e alunos</li>
-          <li>✅ Relatórios e KPIs em tempo real</li>
-        </ul>
-      </div>
-    </div>
 
-  <!-- Painel de formulário -->
-  <div class="auth-panel">
-    <div class="auth-card">
-      <div class="auth-card-header">
-        <div class="breadcrumb">Acesso ao sistema</div>
-        <h2>Bem-vindo de volta</h2>
-      </div>
+<main class="login-page">
+
+  <section class="brand-panel">
+    <div class="logo-badge" aria-hidden="true">SME</div>
+    <h1>Sistema de Gestão Escolar</h1>
+    <p class="subtitle">Secretaria Municipal de Educação de Caratinga</p>
+  </section>
+
+  <section class="form-panel">
+    <form class="login-form" method="post" novalidate>
+      {% csrf_token %}
+      <h2>Bem-vindo de volta</h2>
+      <p class="description">Entre com suas credenciais para acessar o sistema</p>
 
       {% if erros %}
-        <div class="form-errors" aria-live="polite">
-          {% for erro in erros %}
-            <p>{{ erro }}</p>
-          {% endfor %}
+        <div role="alert">
+          {% for erro in erros %}<p>{{ erro }}</p>{% endfor %}
         </div>
       {% endif %}
 
-      <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {% for field in form %}
-          <div class="form-group">
-            <label>{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-              <div class="error">{{ field.errors }}</div>
-            {% endif %}
-          </div>
-        {% endfor %}
-        <div class="auth-form-row">
-          <label class="auth-checkbox">
-            <input type="checkbox"> Lembrar-me
-          </label>
-          <a href="#" class="auth-link">Esqueceu a senha?</a>
-        </div>
+      <div class="field-group">
+        <label for="username">Nome de usuário</label>
+        <input type="text" id="username" name="username" placeholder="Digite seu nome de usuário" required autocomplete="username">
+      </div>
 
-        <button type="submit" class="btn btn-primary auth-submit">Entrar</button>
-      </form>
+      <div class="field-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" name="password" placeholder="Digite sua senha" required autocomplete="current-password">
+      </div>
 
-      <p class="auth-footer">Não tem uma conta? <a href="{% url 'cadastro' %}" class="auth-link">Cadastre-se</a></p>
-    </div>
-  </div>
+      <div class="forgot-row">
+        <a href="#">Esqueceu sua senha?</a>
+      </div>
 
-</div>
+      <button type="submit" class="btn-primary">Entrar</button>
+
+      <p class="footer">© 2026 SME Caratinga — Sistema de Gestão Escolar</p>
+    </form>
+  </section>
+
+</main>
 
 </body>
 </html>

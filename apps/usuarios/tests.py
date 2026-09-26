@@ -38,6 +38,13 @@ class AutenticacaoTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('dashboard'))
 
+    def test_formulario_login_envia_credenciais_por_post(self):
+        response = self.client.get(reverse('login'))
+
+        self.assertContains(response, '<form class="login-form" method="post" novalidate>')
+        self.assertContains(response, 'name="username"')
+        self.assertContains(response, 'name="csrfmiddlewaretoken"')
+
     def test_login_com_senha_invalida(self):
         response = self.client.post(reverse('login'), {'username': 'diretor_user', 'password': 'senha_errada'})
 
@@ -147,3 +154,28 @@ class CadastroFormsTestCase(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertIn('password_confirm', form.errors)
+
+    def test_cadastro_exibe_escolas_ativas_e_funcoes_do_banco(self):
+        escola_inativa = Escola.objects.create(nome='Escola Inativa', ativo=False)
+
+        response = self.client.get(reverse('cadastro'))
+
+        self.assertContains(response, 'Escola Nova')
+        self.assertContains(response, 'Diretor')
+        self.assertNotContains(response, escola_inativa.nome)
+        self.assertNotContains(response, 'EMEI Municipal 1')
+
+    def test_cadastro_cria_perfil_com_escola_e_funcao_selecionadas(self):
+        response = self.client.post(reverse('cadastro'), {
+            'username': 'novo_usuario',
+            'email': 'novo@email.com',
+            'escola': self.escola.pk,
+            'funcao': self.funcao.pk,
+            'password': 'senha123',
+            'password_confirm': 'senha123',
+        })
+
+        self.assertRedirects(response, reverse('login'))
+        perfil = PerfilUsuario.objects.get(usuario__username='novo_usuario')
+        self.assertEqual(perfil.escola, self.escola)
+        self.assertEqual(perfil.funcao, self.funcao)

@@ -33,43 +33,27 @@ def login(request):
 def cadastro(request):
     form = CadastroForms(request.POST or None)
 
-    if request.method == 'POST':
-        nome = (request.POST.get('username') or '').strip()
-        email = (request.POST.get('email') or '').strip()
-        senha = request.POST.get('password', '')
-        confirmar_senha = request.POST.get('password_confirm', '')
-        escola_id = request.POST.get('escola')
-        funcao_id = request.POST.get('funcao')
-        termos = request.POST.get('termos')
+    if request.method == 'POST' and form.is_valid():
+        nome = form.cleaned_data['username']
+        email = form.cleaned_data['email']
 
-        erros = []
-
-        if not nome or not email or not senha or not confirmar_senha or not escola_id or not funcao_id:
-            erros.append('Preencha todos os campos obrigatórios.')
-        elif senha != confirmar_senha:
-            erros.append('As senhas não conferem.')
-        elif User.objects.filter(username=nome).exists():
-            erros.append('Este nome de usuário já está em uso.')
+        if User.objects.filter(username=nome).exists():
+            form.add_error('username', 'Este nome de usuário já está em uso.')
         elif User.objects.filter(email=email).exists():
-            erros.append('Este e-mail já está cadastrado.')
-        elif not termos:
-            erros.append('Você precisa aceitar os termos.')
+            form.add_error('email', 'Este e-mail já está cadastrado.')
+        else:
+            usuario = User.objects.create_user(
+                username=nome,
+                email=email,
+                password=form.cleaned_data['password'],
+            )
 
-        if erros:
-            return render(request, 'usuarios/cadastro.html', {'form': form, 'erros': erros})
+            PerfilUsuario.objects.create(
+                usuario=usuario,
+                escola=form.cleaned_data['escola'],
+                funcao=form.cleaned_data['funcao'],
+            )
 
-        usuario = User.objects.create_user(
-            username=nome,
-            email=email,
-            password=senha,
-        )
-
-        PerfilUsuario.objects.create(
-            usuario=usuario,
-            escola_id=escola_id,
-            funcao_id=funcao_id,
-        )
-
-        return redirect('login')
+            return redirect('login')
 
     return render(request, 'usuarios/cadastro.html', {'form': form})

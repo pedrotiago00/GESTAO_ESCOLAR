@@ -1,100 +1,85 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Criar Conta - Gestão Escolar</title>
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criar conta — Sistema de Gestão Escolar | SME Caratinga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
-<body class="auth-body">
+<body>
 
-<div class="auth-wrapper">
+<main class="login-page">
 
-  <!-- Painel de branding -->
-  <div class="auth-brand">
-    <div class="auth-brand-content">
-      <h1>🎓 Gestão Escolar</h1>
-      <p>Crie sua conta e tenha acesso a todos os módulos do sistema: acadêmico, financeiro, comunicação, administrativo, patrimônio e muito mais.</p>
-      <ul class="auth-brand-list">
-        <li>✅ Cadastro rápido e seguro</li>
-        <li>✅ Acesso conforme seu perfil (admin, professor, aluno ou responsável)</li>
-        <li>✅ Dados protegidos e criptografados</li>
-      </ul>
-    </div>
-  </div>
+  <section class="brand-panel">
+    <div class="logo-badge" aria-hidden="true">SME</div>
+    <h1>Cadastro de Usuário</h1>
+    <p class="subtitle">Secretaria Municipal de Educação de Caratinga</p>
+  </section>
 
-  <!-- Painel de formulário -->
-  <div class="auth-panel">
-    <div class="auth-card">
-      <div class="auth-card-header">
-        <div class="breadcrumb">Novo cadastro</div>
-        <h2>Criar sua conta</h2>
-      </div>
+  <section class="form-panel">
+    <form class="login-form" method="post" novalidate>
+      {% csrf_token %}
+      <h2>Criar sua conta</h2>
+      <p class="description">Preencha os dados abaixo para solicitar acesso ao sistema</p>
 
-      {% if erros %}
-        <div class="form-errors" aria-live="polite">
-          {% for erro in erros %}
-            <p>{{ erro }}</p>
+      {% if form.errors %}
+        <div role="alert">
+          {% for field in form %}
+            {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
           {% endfor %}
+          {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
         </div>
       {% endif %}
 
-      <form method="post" action="{% url 'cadastro' %}">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="username">Nome de usuário</label>
-          <input id="username" name="username" type="text" placeholder="Digite seu nome de usuário" value="{{ request.POST.username|default:'' }}" required>
+      <div class="field-group">
+        <label for="username">Nome de usuário</label>
+        <input type="text" id="username" name="username" placeholder="Digite seu nome de usuário" required autocomplete="username">
+      </div>
+
+      <div class="field-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="nome@caratinga.mg.gov.br" required autocomplete="email">
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="id_escola">Escola</label>
+          <div class="select-wrap">
+            {{ form.escola }}
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input id="email" name="email" type="email" placeholder="seu@email.com" value="{{ request.POST.email|default:'' }}" required>
+        <div class="field-group">
+          <label for="id_funcao">Função</label>
+          <div class="select-wrap">
+            {{ form.funcao }}
+          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="escola">Escola</label>
-          <select id="escola" name="escola" required>
-            <option value="">Selecione a escola</option>
-            {% for escola in form.escola.field.queryset %}
-              <option value="{{ escola.pk }}" {% if request.POST.escola == escola.pk|stringformat:'s' %}selected{% endif %}>{{ escola.nome }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="funcao">Função</label>
-          <select id="funcao" name="funcao" required>
-            <option value="">Selecione a função</option>
-            {% for funcao in form.funcao.field.queryset %}
-              <option value="{{ funcao.pk }}" {% if request.POST.funcao == funcao.pk|stringformat:'s' %}selected{% endif %}>{{ funcao.nome }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <div class="form-group">
+      <div class="field-row">
+        <div class="field-group">
           <label for="password">Senha</label>
-          <input id="password" name="password" type="password" placeholder="Crie uma senha" required>
+          <input type="password" id="password" name="password" placeholder="Digite sua senha" required autocomplete="new-password">
         </div>
 
-        <div class="form-group">
-          <label for="password_confirm">Confirmar Senha</label>
-          <input id="password_confirm" name="password_confirm" type="password" placeholder="Repita a senha" required>
+        <div class="field-group">
+          <label for="confirm-password">Confirmar senha</label>
+          <input type="password" id="confirm-password" name="password_confirm" placeholder="Repita sua senha" required autocomplete="new-password">
         </div>
+      </div>
 
-        <label class="auth-terms">
-          <input name="termos" type="checkbox" required>
-          <span>Concordo com os <a href="#" class="auth-link">Termos de Uso</a> e a <a href="#" class="auth-link">Política de Privacidade</a></span>
-        </label>
+      <button type="submit" class="btn-primary">Criar conta</button>
 
-        <button type="submit" class="btn btn-success auth-submit">Criar Conta</button>
-      </form>
+      <p class="bottom-link">Já tem uma conta? <a href="login.html">Entrar</a></p>
+    </form>
+  </section>
 
-      <p class="auth-footer">Já tem uma conta? <a href="{% url 'login' %}" class="auth-link">Fazer login</a></p>
-    </div>
-  </div>
-
-</div>
+</main>
 
 </body>
 </html>
