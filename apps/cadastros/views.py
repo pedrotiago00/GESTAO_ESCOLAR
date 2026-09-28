@@ -10,22 +10,28 @@ def cadastros(request):
     return render(request, 'cadastros/index.html')
 
 @login_required
-@funcao_requerida('Diretor')
+@funcao_requerida('Diretor', superusuario_permitido=True)
 def turmas(request):
+    if request.user.is_superuser:
+        professores = Professores.objects.filter(status='Ativo').order_by('nome')
+        turmas = Turmas.objects.select_related('professor').all()
+    else:
+        escola = request.user.perfil.escola
+        professores = Professores.objects.filter(escola=escola, status='Ativo').order_by('nome')
+        turmas = Turmas.objects.select_related('professor').filter(escola=escola)
+
     if request.method == 'POST':
-        Turmas.objects.create(
-            serie=request.POST.get('serie', '').strip(),
-            turno=request.POST.get('turno', '').strip(),
-            sala=request.POST.get('sala', '').strip(),
-            escola = request.user.perfil.escola,
-            professor_id=request.POST.get('professor'),
-        )
+        professor = professores.filter(pk=request.POST.get('professor')).first()
+        if professor:
+            Turmas.objects.create(
+                serie=request.POST.get('serie', '').strip(),
+                turno=request.POST.get('turno', '').strip(),
+                sala=request.POST.get('sala', '').strip(),
+                escola=professor.escola,
+                professor=professor,
+            )
         return redirect('turmas')
 
-    turmas = Turmas.objects.select_related('professor').filter(
-        escola=request.user.perfil.escola
-    )
-    professores = Professores.objects.filter(escola=request.user.perfil.escola, status='Ativo').order_by('nome')
     return render(request, 'cadastros/turmas.html', {
         'turmas': turmas,
         'professores': professores,
@@ -69,12 +75,27 @@ def estudantes(request):
         )
         return redirect('estudantes')
 
-    estudantes = Estudantes.objects.select_related('turma', 'responsavel').filter(escola=request.user.perfil.escola).order_by('nome')
-    turmas = Turmas.objects.filter(escola=request.user.perfil.escola).order_by('serie', 'turno')
-    responsaveis = Responsaveis.objects.all().order_by('nome')
+    escola = request.user.perfil.escola
+    estudantes = Estudantes.objects.select_related('turma', 'responsavel').filter(
+        escola=escola,
+        turma__escola=escola,
+    ).order_by('nome')
+    turmas = Turmas.objects.filter(escola=escola).order_by('serie', 'turno')
+    turma_id = request.GET.get('turma', '').strip()
+    turma_selecionada = None
+    if turma_id:
+        if turma_id.isdecimal():
+            turma_selecionada = turmas.filter(pk=turma_id).first()
+        if turma_selecionada:
+            estudantes = estudantes.filter(turma=turma_selecionada)
+        else:
+            estudantes = estudantes.none()
+
+    responsaveis = Responsaveis.objects.filter(escola=escola).order_by('nome')
     return render(request, 'cadastros/estudantes.html', {
         'estudantes': estudantes,
         'turmas': turmas,
+        'turma_selecionada': turma_selecionada,
         'responsaveis': responsaveis,
     })
 

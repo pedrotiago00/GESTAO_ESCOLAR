@@ -57,6 +57,12 @@ class AutenticacaoTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/?next=/dashboard/')
 
+    def test_acesso_sem_login_a_turmas_redireciona_para_login(self):
+        response = self.client.get(reverse('turmas'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/?next=/cadastros/turmas/')
+
     def test_usuario_sem_permissao_recebe_403(self):
         self.client.force_login(self.usuario_professor)
 

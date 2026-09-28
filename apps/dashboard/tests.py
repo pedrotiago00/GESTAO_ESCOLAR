@@ -123,6 +123,58 @@ class DashboardViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/?next=/dashboard/')
 
+    def test_superusuario_sem_perfil_visualiza_turmas_de_todas_as_escolas(self):
+        outra_escola = Escola.objects.create(nome='Outra Escola do Dashboard')
+        outra_disciplina = Disciplinas.objects.create(
+            escola=outra_escola,
+            codigo='HIS-02',
+            nome='História',
+            area='Humanas',
+            carga_horaria=60,
+        )
+        outro_professor = Professores.objects.create(
+            escola=outra_escola,
+            matricula='P-5001',
+            nome='Prof. Lima',
+            formacao='Licenciatura em História',
+            disciplina=outra_disciplina,
+            carga_horaria=40,
+        )
+        outra_turma = Turmas.objects.create(
+            escola=outra_escola,
+            serie='7º Ano',
+            turno='Manhã',
+            sala='A2',
+            professor=outro_professor,
+        )
+        turma_com_vinculo_inconsistente = Turmas.objects.create(
+            escola=outra_escola,
+            serie='6º Ano',
+            turno='Tarde',
+            sala='A3',
+            professor=self.professor,
+        )
+        superusuario = get_user_model().objects.create_superuser(
+            username='admin_dashboard',
+            email='admin@example.com',
+            password='senha-segura',
+        )
+        self.client.force_login(superusuario)
+
+        response = self.client.get(reverse('dashboard'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(response.context['escola'])
+        self.assertEqual(response.context['total_turmas'], 3)
+        self.assertEqual(response.context['total_turmas_escola'], 3)
+        self.assertEqual(
+            set(response.context['turmas'].values_list('pk', flat=True)),
+            {self.turma.pk, outra_turma.pk, turma_com_vinculo_inconsistente.pk},
+        )
+        self.assertContains(response, '9º Ano')
+        self.assertContains(response, '7º Ano')
+        self.assertContains(response, '6º Ano')
+
     def test_dashboard_exibe_metricas_da_escola(self):
         self.client.force_login(self.usuario)
 
@@ -139,3 +191,62 @@ class DashboardViewTestCase(TestCase):
         self.assertEqual(response.context['media_notas'], Decimal('7.8'))
         self.assertEqual(response.context['proximos_exames'].count(), 1)
         self.assertEqual(response.context['estudantes_recentes'].count(), 2)
+
+    def test_dashboard_filtra_turmas_por_turno_busca_e_escola(self):
+        turma_manha = Turmas.objects.create(
+            escola=self.escola,
+            serie='8º Ano',
+            turno='Manhã',
+            sala='B2',
+            professor=self.professor,
+        )
+        outra_escola = Escola.objects.create(nome='Outra Escola')
+        outra_disciplina = Disciplinas.objects.create(
+            escola=outra_escola,
+            codigo='HIS-01',
+            nome='História',
+            area='Humanas',
+            carga_horaria=60,
+        )
+        outro_professor = Professores.objects.create(
+            escola=outra_escola,
+            matricula='P-4001',
+            nome='Prof. Outra Escola',
+            formacao='Licenciatura em História',
+            disciplina=outra_disciplina,
+            carga_horaria=40,
+        )
+        turma_outra_escola = Turmas.objects.create(
+            escola=outra_escola,
+            serie='9º Ano',
+            turno='Tarde',
+            sala='D4',
+            professor=outro_professor,
+        )
+        self.client.force_login(self.usuario)
+
+        response = self.client.get(reverse('dashboard'))
+
+        self.assertNotIn(
+            turma_outra_escola.pk,
+            response.context['turmas'].values_list('pk', flat=True),
+        )
+
+        response = self.client.get(reverse('dashboard'), {
+            'q': 'Maria Silva',
+            'turno': 'Tarde',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            list(response.context['turmas'].values_list('pk', flat=True)),
+            [self.turma.pk],
+        )
+        self.assertEqual(response.context['turmas'][0].estudantes_count, 2)
+
+        response = self.client.get(reverse('dashboard'), {'turno': 'Manhã'})
+
+        self.assertEqual(
+            list(response.context['turmas'].values_list('pk', flat=True)),
+            [turma_manha.pk],
+        )

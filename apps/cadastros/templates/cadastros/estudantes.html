@@ -25,6 +25,12 @@
     <button type="button" class="btn btn-primary" id="open-estudante-modal">+ Novo Estudante</button>
   </div>
 
+  {% if turma_selecionada %}
+  <div class="panel" role="status">
+    <p>Exibindo estudantes da turma {{ turma_selecionada.serie }} - {{ turma_selecionada.turno }}. <a href="{% url 'estudantes' %}">Ver todos os estudantes</a></p>
+  </div>
+  {% endif %}
+
   <div class="modal" id="estudante-modal" role="dialog" aria-modal="true" aria-labelledby="estudante-modal-title">
     <div class="modal-content">
       <div class="modal-header">

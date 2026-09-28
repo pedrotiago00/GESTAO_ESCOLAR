@@ -234,6 +234,29 @@ body {
   outline-offset: 2px;
 }
 
+.btn-secondary {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-blue);
+  background: #FFFFFF;
+  border: 1px solid var(--color-blue);
+  border-radius: 8px;
+  padding: 13px;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--color-blue-tint);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-blue-dark);
+  outline-offset: 2px;
+}
+
 .footer {
   font-size: 12px;
   color: var(--color-placeholder);

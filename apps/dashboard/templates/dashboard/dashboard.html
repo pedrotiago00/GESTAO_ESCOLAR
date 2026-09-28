@@ -1,219 +1,152 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - Gestão Escolar</title>
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turmas | {{ escola.nome|default:'Gestão Escolar' }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 </head>
-<body>
-<div class="app">
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <h2>🎓 Gestão Escolar</h2>
-      <p>Painel de administração</p>
-    </div>
+<body class="school-dashboard">
+  <button class="dashboard-backdrop" id="dashboard-backdrop" type="button" aria-label="Fechar navegação"></button>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" id="dashboard-sidebar" aria-label="Navegação da escola">
+      <div class="school-profile">
+        <div class="school-profile__avatar" aria-hidden="true">{% if escola %}{{ escola.nome|first|upper }}{% else %}E{% endif %}</div>
+        <strong>{{ escola.nome|default:'Gestão Escolar' }}</strong>
+        <span>Painel administrativo</span>
+      </div>
 
-    <nav aria-label="Menu principal">
-      <div class="menu-item">
-        <a class="menu-title active" href="{% url 'dashboard' %}">
-          <span>📊 Dashboard</span>
+      <nav class="dashboard-nav" aria-label="Menu principal">
+        <a class="dashboard-nav__link is-active" href="{% url 'dashboard' %}" aria-current="page">
+          <span class="dashboard-nav__icon" aria-hidden="true">▦</span>Turmas
+        </a>
+        <a class="dashboard-nav__link" href="{% url 'academico' %}">
+          <span class="dashboard-nav__icon" aria-hidden="true">◎</span>Acadêmico
+        </a>
+        <a class="dashboard-nav__link" href="{% url 'cadastros' %}">
+          <span class="dashboard-nav__icon" aria-hidden="true">▤</span>Cadastros
+        </a>
+        <a class="dashboard-nav__link" href="{% url 'comunicacao' %}">
+          <span class="dashboard-nav__icon" aria-hidden="true">◉</span>Comunicação
+        </a>
+      </nav>
+
+      <div class="dashboard-nav dashboard-nav--secondary" aria-label="Atalhos de cadastro">
+        <a class="dashboard-nav__link" href="{% url 'estudantes' %}">
+          <span class="dashboard-nav__icon" aria-hidden="true">♙</span>Estudantes
+        </a>
+        <a class="dashboard-nav__link" href="{% url 'professores' %}">
+          <span class="dashboard-nav__icon" aria-hidden="true">♧</span>Professores
         </a>
       </div>
+    </aside>
 
-      <div class="menu-item">
-        <div class="menu-title open" role="button" tabindex="0" aria-expanded="true">
-          <span>🎓 Acadêmico</span><span class="arrow">▶</span>
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-toggle" id="dashboard-menu-toggle" type="button" aria-label="Abrir navegação" aria-controls="dashboard-sidebar" aria-expanded="false">
+          <span aria-hidden="true">☰</span>
+        </button>
+        <form class="dashboard-search" method="get" role="search">
+          <label class="visually-hidden" for="dashboard-search-input">Buscar turmas, estudantes ou professores</label>
+          <input id="dashboard-search-input" type="search" name="q" value="{{ busca }}" placeholder="Buscar turmas, estudantes...">
+          {% if turno_selecionado %}<input type="hidden" name="turno" value="{{ turno_selecionado }}">{% endif %}
+          <button type="submit" aria-label="Buscar"><span aria-hidden="true">⌕</span></button>
+        </form>
+        <div class="dashboard-user">
+          <div class="dashboard-user__avatar" aria-hidden="true">{% if request.user.first_name %}{{ request.user.first_name|first|upper }}{% else %}{{ request.user.username|first|upper }}{% endif %}</div>
+          <div class="dashboard-user__identity">
+            <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+            <span>{% if request.user.perfil %}{{ request.user.perfil.funcao.nome }}{% else %}Usuário{% endif %}</span>
+          </div>
         </div>
-        <div class="submenu open">
-          <a href="{% url 'academico' %}">Visão geral</a>
-          <a href="{% url 'horarios' %}">Horários</a>
-          <a href="{% url 'frequencia' %}">Frequência</a>
-          <a href="{% url 'notas' %}">Notas</a>
-          <a href="{% url 'exames' %}">Exames</a>
-          <a href="{% url 'planejamento' %}">Planejamento</a>
-          <a href="{% url 'diario_de_classe' %}">Diário de classe</a>
-        </div>
-      </div>
+      </header>
 
-      <div class="menu-item">
-        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
-          <span>🗂️ Cadastros</span><span class="arrow">▶</span>
-        </div>
-        <div class="submenu">
-          <a href="{% url 'cadastros' %}">Visão geral</a>
-          <a href="{% url 'turmas' %}">Turmas</a>
-          <a href="{% url 'disciplinas' %}">Disciplinas</a>
-          <a href="{% url 'estudantes' %}">Estudantes</a>
-          <a href="{% url 'professores' %}">Professores</a>
-          <a href="{% url 'pais' %}">Pais e responsáveis</a>
-        </div>
-      </div>
+      <main class="dashboard-content">
+        <section class="dashboard-heading" aria-labelledby="dashboard-title">
+          <div>
+            <p class="dashboard-breadcrumb">Início <span aria-hidden="true">/</span> Turmas</p>
+            <h1 id="dashboard-title">Turmas</h1>
+            <p class="dashboard-subtitle">Acompanhe as turmas e acesse seus espaços de trabalho.</p>
+          </div>
+          <div class="dashboard-count" aria-live="polite">
+            <strong>{{ total_turmas_escola|stringformat:'02d' }}</strong>
+            <span>turmas cadastradas</span>
+          </div>
+        </section>
 
-      <div class="menu-item">
-        <div class="menu-title" role="button" tabindex="0" aria-expanded="false">
-          <span>📣 Comunicação</span><span class="arrow">▶</span>
-        </div>
-        <div class="submenu">
-          <a href="{% url 'comunicacao' %}">Visão geral</a>
-          <a href="{% url 'avisos' %}">Avisos</a>
-          <a href="{% url 'eventos' %}">Eventos</a>
-          <a href="{% url 'reunioes' %}">Reuniões</a>
-          <a href="{% url 'reclamacoes' %}">Reclamações</a>
-        </div>
-      </div>
+        <nav class="class-filters" aria-label="Filtrar turmas por turno">
+          <a class="class-filter{% if not turno_selecionado %} is-active{% endif %}" href="{% url 'dashboard' %}{% if busca %}?q={{ busca|urlencode }}{% endif %}"{% if not turno_selecionado %} aria-current="page"{% endif %}>
+            Todas as turmas <span>{{ total_turmas_escola|stringformat:'02d' }}</span>
+          </a>
+          {% for turno in turnos %}
+            <a class="class-filter{% if turno_selecionado == turno.turno %} is-active{% endif %}" href="?{% if busca %}q={{ busca|urlencode }}&amp;{% endif %}turno={{ turno.turno|urlencode }}"{% if turno_selecionado == turno.turno %} aria-current="page"{% endif %}>
+              {{ turno.turno }} <span>{{ turno.total|stringformat:'02d' }}</span>
+            </a>
+          {% endfor %}
+        </nav>
 
-    </nav>
-  </aside>
-
-  <div class="main">
-    <header class="header">
-      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">☰</button>
-      <h1>{{ escola.nome }}</h1>
-      <div class="user-info">
-        <div class="user-avatar">👤</div>
-        <span>{{ request.user.get_full_name|default:request.user.username }}</span>
-      </div>
-    </header>
-
-    <main class="content">
-
-  <div class="page-header">
-    <div>
-      <div class="breadcrumb">Início / Dashboard</div>
-      <h2>Visão geral de {{ escola.nome }}</h2>
-    </div>
-  </div>
-
-  <div class="stats-grid">
-    <div class="stat-card blue">
-      <div class="stat-info">
-        <h3>Estudantes</h3>
-        <div class="value">{{ total_estudantes }}</div>
-        <div class="change">{{ estudantes_ativos }} ativos</div>
-      </div>
-      <div class="stat-icon">👨‍🎓</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-info">
-        <h3>Professores ativos</h3>
-        <div class="value">{{ professores_ativos }}</div>
-        <div class="change">cadastrados no banco</div>
-      </div>
-      <div class="stat-icon">👨‍🏫</div>
-    </div>
-    <div class="stat-card orange">
-      <div class="stat-info">
-        <h3>Turmas</h3>
-        <div class="value">{{ total_turmas }}</div>
-        <div class="change">cadastradas no banco</div>
-      </div>
-      <div class="stat-icon">🏫</div>
-    </div>
-    <div class="stat-card purple">
-      <div class="stat-info">
-        <h3>Disciplinas ativas</h3>
-        <div class="value">{{ disciplinas_ativas }}</div>
-        <div class="change">cadastradas no banco</div>
-      </div>
-      <div class="stat-icon">📚</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-info">
-        <h3>Frequência média</h3>
-        {% if frequencia_media is not None %}
-          <div class="value">{{ frequencia_media|floatformat:1 }}%</div>
-          <div class="change">calculada pelos registros</div>
-        {% else %}
-          <div class="value">-</div>
-          <div class="change">sem registros</div>
-        {% endif %}
-      </div>
-      <div class="stat-icon">📊</div>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="panel">
-      <div class="panel-header"><h3>📈 Desempenho acadêmico</h3></div>
-      {% if media_notas is not None %}
-        <div class="stat-info">
-          <h3>Média geral das notas lançadas</h3>
-          <div class="value">{{ media_notas|floatformat:1 }}</div>
-        </div>
-      {% else %}
-        <div class="empty-state">Ainda não há notas lançadas.</div>
-      {% endif %}
-    </div>
-    <div class="panel">
-      <div class="panel-header"><h3>🎯 Próximos Eventos</h3></div>
-      {% if proximos_exames %}
-        <div class="timeline">
-          {% for exame in proximos_exames %}
-            <div class="timeline-item">
-              <h4>{{ exame.disciplina.nome }} - {{ exame.turma.serie }}</h4>
-              <p>{{ exame.tipo }} · {{ exame.status }} · Prof. {{ exame.professor.nome }}</p>
-              <div class="time">📅 {{ exame.data|date:"d/m/Y" }}</div>
+        <section class="class-grid" aria-label="Turmas encontradas" aria-live="polite">
+          {% for turma in turmas %}
+            <article class="class-card">
+              <div class="class-card__details">
+                <h2>{{ turma.serie }} <span aria-hidden="true">·</span> {{ turma.turno }}</h2>
+                <p class="class-card__subject">{{ turma.professor.disciplina.nome }}</p>
+                <p class="class-card__meta">{{ turma.estudantes_count }} estudante{{ turma.estudantes_count|pluralize }} <span aria-hidden="true">·</span> Sala {{ turma.sala }}</p>
+              </div>
+              <div class="class-card__footer">
+                <span>Turma cadastrada</span>
+                <a href="{% url 'estudantes' %}?turma={{ turma.pk }}" aria-label="Ver estudantes da turma {{ turma.serie }}, {{ turma.turno }}">Ver estudantes <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="class-card__accent" aria-hidden="true"></div>
+            </article>
+          {% empty %}
+            <div class="class-empty" role="status">
+              <span class="class-empty__icon" aria-hidden="true">▦</span>
+              {% if busca or turno_selecionado %}
+                <h2>Nenhuma turma encontrada</h2>
+                <p>Tente outro termo ou escolha um turno diferente.</p>
+                <a href="{% url 'dashboard' %}">Limpar filtros</a>
+              {% else %}
+                <h2>Ainda não há turmas cadastradas</h2>
+                <p>As turmas da escola aparecerão aqui depois do cadastro.</p>
+                <a href="{% url 'turmas' %}">Ir para cadastros de turmas</a>
+              {% endif %}
             </div>
           {% endfor %}
-        </div>
-      {% else %}
-        <div class="empty-state">Não há exames futuros cadastrados.</div>
-      {% endif %}
+        </section>
+      </main>
     </div>
   </div>
 
-  <div class="panel">
-    <div class="panel-header">
-      <h3>👨‍🎓 Estudantes cadastrados recentemente</h3>
-    </div>
-    {% if estudantes_recentes %}
-      <div class="table-container">
-        <table>
-          <thead><tr><th>Nome</th><th>Matrícula</th><th>Turma</th><th>Status</th></tr></thead>
-          <tbody>
-            {% for estudante in estudantes_recentes %}
-              <tr>
-                <td>{{ estudante.nome }}</td>
-                <td>{{ estudante.matricula }}</td>
-                <td>{{ estudante.turma.serie }} - {{ estudante.turma.turno }}</td>
-                <td>{{ estudante.status }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% else %}
-      <div class="empty-state">Não há estudantes cadastrados.</div>
-    {% endif %}
-  </div>
+  <script>
+    const sidebar = document.getElementById('dashboard-sidebar');
+    const menuToggle = document.getElementById('dashboard-menu-toggle');
+    const backdrop = document.getElementById('dashboard-backdrop');
 
-    </main>
-  </div>
-</div>
-<script>
-  document.querySelectorAll('.menu-title[role="button"]').forEach(function (menuTitle) {
-    function toggleMenu() {
-      var isOpen = menuTitle.classList.toggle('open');
-      menuTitle.nextElementSibling.classList.toggle('open', isOpen);
-      menuTitle.setAttribute('aria-expanded', isOpen);
+    function setNavigationOpen(isOpen) {
+      sidebar.classList.toggle('is-open', isOpen);
+      backdrop.classList.toggle('is-visible', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Fechar navegação' : 'Abrir navegação');
     }
 
-    menuTitle.addEventListener('click', toggleMenu);
-    menuTitle.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleMenu();
+    menuToggle.addEventListener('click', function () {
+      setNavigationOpen(!sidebar.classList.contains('is-open'));
+    });
+    backdrop.addEventListener('click', function () {
+      setNavigationOpen(false);
+      menuToggle.focus();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && sidebar.classList.contains('is-open')) {
+        setNavigationOpen(false);
+        menuToggle.focus();
       }
     });
-  });
-
-  document.getElementById('menu-toggle').addEventListener('click', function () {
-    var sidebar = document.getElementById('sidebar');
-    var isOpen = sidebar.classList.toggle('show');
-    this.setAttribute('aria-expanded', isOpen);
-  });
-</script>
+  </script>
 </body>
 </html>
