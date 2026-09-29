@@ -113,7 +113,6 @@ body.school-dashboard {
 .dashboard-nav__link:focus-visible,
 .dashboard-search button:focus-visible,
 .class-filter:focus-visible,
-.class-card__footer a:focus-visible,
 .class-empty a:focus-visible,
 .dashboard-menu-toggle:focus-visible {
   outline: 3px solid #f4c95d;
@@ -128,7 +127,7 @@ body.school-dashboard {
   place-items: center;
   border-radius: 7px;
   background: rgb(255 255 255 / 10%);
-  color: #fff4be;
+  color: #d4e1ed;
   font-size: 16px;
 }
 
@@ -352,6 +351,15 @@ body.school-dashboard {
   border: 1px solid #e8e9e5;
   border-radius: 8px;
   background: var(--dashboard-paper);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.class-card:hover {
+  border-color: #bfd0dc;
+  box-shadow: 0 8px 20px rgb(1 53 103 / 8%);
+  transform: translateY(-2px);
 }
 
 .class-card__details {
@@ -405,20 +413,19 @@ body.school-dashboard {
   font-size: 12px;
 }
 
-.class-card__footer a {
+.class-card__link {
   color: #b03e48;
   font-size: 12px;
   font-weight: 600;
-  text-decoration: none;
   white-space: nowrap;
 }
 
-.class-card__footer a:hover {
+.class-card:hover .class-card__link {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.class-card__footer a span {
+.class-card__link span {
   padding-left: 3px;
 }
 
@@ -427,37 +434,42 @@ body.school-dashboard {
 }
 
 .class-card:nth-child(6n + 2) .class-card__accent,
-.class-card:nth-child(6n + 2) .class-card__footer a {
+.class-card:nth-child(6n + 2) .class-card__link {
   background: #13885f;
   color: #126b43;
 }
 
 .class-card:nth-child(6n + 3) .class-card__accent,
-.class-card:nth-child(6n + 3) .class-card__footer a {
+.class-card:nth-child(6n + 3) .class-card__link {
   background: #d7ae00;
   color: #806700;
 }
 
 .class-card:nth-child(6n + 4) .class-card__accent,
-.class-card:nth-child(6n + 4) .class-card__footer a {
+.class-card:nth-child(6n + 4) .class-card__link {
   background: #92a91e;
   color: #52620d;
 }
 
 .class-card:nth-child(6n + 5) .class-card__accent,
-.class-card:nth-child(6n + 5) .class-card__footer a {
+.class-card:nth-child(6n + 5) .class-card__link {
   background: #f47a3c;
   color: #9a4316;
 }
 
 .class-card:nth-child(6n) .class-card__accent,
-.class-card:nth-child(6n) .class-card__footer a {
+.class-card:nth-child(6n) .class-card__link {
   background: #3183b5;
   color: #1d5c82;
 }
 
-.class-card__footer a {
+.class-card__link {
   background: transparent !important;
+}
+
+.class-card:focus-visible {
+  outline: 3px solid #f4c95d;
+  outline-offset: 3px;
 }
 
 .class-empty {

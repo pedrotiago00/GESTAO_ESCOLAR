@@ -88,41 +88,61 @@
       </form>
     </div>
   </div>
-  <div class="stats-grid">
-    <div class="stat-card blue"><div class="stat-info"><h3>Total</h3><div class="value">1.247</div></div><div class="stat-icon">👨‍🎓</div></div>
-    <div class="stat-card green"><div class="stat-info"><h3>Ativos</h3><div class="value">1.198</div></div><div class="stat-icon">✅</div></div>
-    <div class="stat-card orange"><div class="stat-info"><h3>Transferidos</h3><div class="value">32</div></div><div class="stat-icon">🔄</div></div>
-    <div class="stat-card red"><div class="stat-info"><h3>Inadimplentes</h3><div class="value">17</div></div><div class="stat-icon">⚠️</div></div>
-  </div>
-  <div class="panel">
-    <div class="search-bar">
-      <input type="text" placeholder="🔍 Buscar por nome, matrícula ou CPF...">
-      <select><option>Todas as turmas</option><option>9º A</option><option>9º B</option><option>8º A</option></select>
-      <select><option>Todos os status</option><option>Ativo</option><option>Inativo</option><option>Transferido</option></select>
-      <button class="btn btn-primary">🔍 Filtrar</button>
+  <section class="student-list" aria-labelledby="student-list-title">
+    <div class="student-list-heading">
+      <div>
+        <h3 id="student-list-title">Alunos cadastrados</h3>
+        <p>{{ total_estudantes }} no total <span aria-hidden="true">·</span> {{ total_estudantes_ativos }} ativos</p>
+      </div>
     </div>
+    <form method="get" class="student-filters" role="search">
+      <label class="student-search" for="busca-estudante">
+        <span aria-hidden="true">⌕</span>
+        <input id="busca-estudante" type="search" name="q" value="{{ busca }}" placeholder="Buscar por nome ou matrícula">
+      </label>
+      <label class="student-filter-field" for="filtro-turma">Turma
+        <select id="filtro-turma" name="turma">
+          <option value="">Todas</option>
+          {% for turma in turmas %}
+          <option value="{{ turma.pk }}" {% if turma_selecionada.pk == turma.pk %}selected{% endif %}>{{ turma.serie }} - {{ turma.turno }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="student-filter-field" for="filtro-status">Situação
+        <select id="filtro-status" name="status">
+          <option value="">Todas</option>
+          <option value="Ativo" {% if status_selecionado == 'Ativo' %}selected{% endif %}>Ativo</option>
+          <option value="Inativo" {% if status_selecionado == 'Inativo' %}selected{% endif %}>Inativo</option>
+          <option value="Transferido" {% if status_selecionado == 'Transferido' %}selected{% endif %}>Transferido</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit">Filtrar</button>
+    </form>
     <div class="table-container">
-      <table>
-        <thead><tr><th>Matrícula</th><th>Nome</th><th>Turma</th><th>Data Nasc.</th><th>Responsável</th><th>Telefone</th><th>Status</th><th>Ações</th></tr></thead>
+      <table class="student-table">
+        <thead><tr><th>Aluno</th><th>Turma</th><th>Data de nascimento</th><th>Responsável</th><th>Telefone</th><th>Situação</th></tr></thead>
         <tbody>
           {% for estudante in estudantes %}
           <tr>
-            <td>{{ estudante.matricula }}</td>
-            <td>{{ estudante.nome }}</td>
-            <td>{{ estudante.turma.serie }}</td>
+            <td>
+              <div class="student-identity">
+                <span class="student-avatar" aria-hidden="true">{{ estudante.nome|slice:":1"|upper }}</span>
+                <span><strong>{{ estudante.nome }}</strong><small>Matrícula {{ estudante.matricula }}</small></span>
+              </div>
+            </td>
+            <td>{{ estudante.turma.serie }} <small class="student-secondary">{{ estudante.turma.turno }}</small></td>
             <td>{{ estudante.data_nascimento|date:"d/m/Y" }}</td>
             <td>{{ estudante.responsavel.nome }}</td>
             <td>{{ estudante.telefone }}</td>
-            <td><span class="badge {% if estudante.status == 'Ativo' %}badge-success{% else %}badge-warning{% endif %}">{{ estudante.status }}</span></td>
-            <td><button class="btn btn-sm btn-primary">👁️</button> <button class="btn btn-sm btn-warning">✏️</button> <button class="btn btn-sm btn-danger">🗑️</button></td>
+            <td><span class="badge {% if estudante.status == 'Ativo' %}badge-success{% elif estudante.status == 'Transferido' %}badge-info{% else %}badge-gray{% endif %}">{{ estudante.status }}</span></td>
           </tr>
           {% empty %}
-          <tr><td colspan="8">Nenhum estudante cadastrado.</td></tr>
+          <tr><td colspan="6" class="empty-state">Nenhum aluno encontrado com esses filtros.</td></tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  </div>
+  </section>
 
 </main>
 <script>

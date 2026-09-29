@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=20260929">
 </head>
 <body class="school-dashboard">
   <button class="dashboard-backdrop" id="dashboard-backdrop" type="button" aria-label="Fechar navegação"></button>
@@ -91,7 +91,7 @@
 
         <section class="class-grid" aria-label="Turmas encontradas" aria-live="polite">
           {% for turma in turmas %}
-            <article class="class-card">
+            <a class="class-card" href="{% url 'estudantes' %}?turma={{ turma.pk }}" aria-label="Ver estudantes da turma {{ turma.serie }}, {{ turma.turno }}">
               <div class="class-card__details">
                 <h2>{{ turma.serie }} <span aria-hidden="true">·</span> {{ turma.turno }}</h2>
                 <p class="class-card__subject">{{ turma.professor.disciplina.nome }}</p>
@@ -99,10 +99,10 @@
               </div>
               <div class="class-card__footer">
                 <span>Turma cadastrada</span>
-                <a href="{% url 'estudantes' %}?turma={{ turma.pk }}" aria-label="Ver estudantes da turma {{ turma.serie }}, {{ turma.turno }}">Ver estudantes <span aria-hidden="true">→</span></a>
+                <span class="class-card__link">Ver estudantes <span aria-hidden="true">→</span></span>
               </div>
               <div class="class-card__accent" aria-hidden="true"></div>
-            </article>
+            </a>
           {% empty %}
             <div class="class-empty" role="status">
               <span class="class-empty__icon" aria-hidden="true">▦</span>

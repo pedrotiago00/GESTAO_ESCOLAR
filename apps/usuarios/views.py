@@ -3,6 +3,8 @@ from .forms import LoginForms, CadastroForms
 from .models import Funcao, PerfilUsuario
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
+from django.db import transaction
+from apps.cadastros.models import Professores
 
 
 def login(request):
@@ -42,17 +44,30 @@ def cadastro(request):
         elif User.objects.filter(email=email).exists():
             form.add_error('email', 'Este e-mail já está cadastrado.')
         else:
-            usuario = User.objects.create_user(
-                username=nome,
-                email=email,
-                password=form.cleaned_data['password'],
-            )
+            with transaction.atomic():
+                usuario = User.objects.create_user(
+                    username=nome,
+                    email=email,
+                    password=form.cleaned_data['password'],
+                )
 
-            PerfilUsuario.objects.create(
-                usuario=usuario,
-                escola=form.cleaned_data['escola'],
-                funcao=form.cleaned_data['funcao'],
-            )
+                escola = form.cleaned_data['escola']
+                funcao = form.cleaned_data['funcao']
+                PerfilUsuario.objects.create(
+                    usuario=usuario,
+                    escola=escola,
+                    funcao=funcao,
+                )
+
+                if funcao.nome.strip().casefold() == 'professor':
+                    Professores.objects.create(
+                        escola=escola,
+                        matricula=form.cleaned_data['matricula'],
+                        nome=form.cleaned_data['nome_completo'],
+                        formacao=form.cleaned_data['formacao'],
+                        disciplina=form.cleaned_data['disciplina'],
+                        carga_horaria=form.cleaned_data['carga_horaria'],
+                    )
 
             return redirect('login')
 

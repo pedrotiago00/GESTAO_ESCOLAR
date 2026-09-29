@@ -201,6 +201,37 @@ tr:hover { background: #f9fafb; }
 .folder-index a { color: #3b82f6; text-decoration: none; font-size: 16px; font-weight: 500; }
 .folder-index a:hover { text-decoration: underline; }
 
+/* Listagem de estudantes */
+.student-list { background: white; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; }
+.student-list-heading { padding: 20px 22px 16px; border-bottom: 1px solid #e5e7eb; }
+.student-list-heading h3 { color: #1f2937; font-size: 18px; margin-bottom: 5px; }
+.student-list-heading p { color: #6b7280; font-size: 13px; }
+.student-list-heading p span { padding: 0 5px; color: #9ca3af; }
+.student-filters { display: flex; align-items: end; gap: 12px; padding: 16px 22px; border-bottom: 1px solid #e5e7eb; }
+.student-search { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 200px; height: 39px; padding: 0 11px; border: 1px solid #d1d5db; border-radius: 6px; color: #6b7280; }
+.student-search:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.student-search span { font-size: 21px; line-height: 1; }
+.student-search input { width: 100%; min-width: 0; border: 0; outline: 0; color: #1f2937; font: inherit; font-size: 14px; }
+.student-search input::placeholder { color: #6b7280; }
+.student-filter-field { display: grid; gap: 5px; color: #4b5563; font-size: 12px; font-weight: 600; }
+.student-filter-field select { min-width: 145px; height: 39px; padding: 0 30px 0 10px; border: 1px solid #d1d5db; border-radius: 6px; background: white; color: #374151; font: inherit; font-size: 14px; }
+.student-filters .btn { height: 39px; }
+.student-table th { padding: 11px 14px; font-size: 11px; }
+.student-table td { padding: 10px 14px; white-space: nowrap; }
+.student-table td:first-child { min-width: 235px; white-space: normal; }
+.student-identity { display: flex; align-items: center; gap: 10px; }
+.student-avatar { display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: #e8eefc; color: #1e40af; font-size: 13px; font-weight: 700; }
+.student-identity strong { display: block; color: #1f2937; font-size: 13px; font-weight: 600; }
+.student-identity small, .student-secondary { display: block; margin-top: 3px; color: #6b7280; font-size: 11px; }
+
+@media (max-width: 700px) {
+  .student-list-heading { padding: 17px 16px 13px; }
+  .student-filters { align-items: stretch; flex-direction: column; padding: 14px 16px; }
+  .student-search, .student-filter-field select { width: 100%; }
+  .student-filters .btn { justify-content: center; }
+  .student-table { min-width: 760px; }
+}
+
 /* ==========================================================
    Gestão Escolar - Design System (Autenticação)
    Mesma paleta, tipografia e componentes usados nos módulos:

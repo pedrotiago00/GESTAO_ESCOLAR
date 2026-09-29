@@ -140,6 +140,31 @@ class EstudantesViewFiltroTurmaTestCase(TestCase):
         )
         self.assertNotIn(outro_estudante.pk, response.context['estudantes'].values_list('pk', flat=True))
 
+    def test_busca_por_nome_ou_matricula_com_filtro_de_status(self):
+        estudante_inativo = Estudantes.objects.create(
+            escola=self.escola,
+            matricula='E-1002',
+            nome='João Souza',
+            turma=self.turma,
+            data_nascimento='2014-05-10',
+            responsavel=self.responsavel,
+            telefone='11988887777',
+            status='Inativo',
+        )
+
+        response = self.client.get(reverse('estudantes'), {
+            'q': 'João Souza',
+            'status': 'Ativo',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context['estudantes']), [self.estudante])
+        self.assertEqual(response.context['total_estudantes'], 2)
+        self.assertEqual(response.context['total_estudantes_ativos'], 1)
+
+        response = self.client.get(reverse('estudantes'), {'q': estudante_inativo.matricula})
+        self.assertEqual(list(response.context['estudantes']), [estudante_inativo])
+
     def test_filtro_rejeita_turma_de_outra_escola_e_id_malformado(self):
         outra_escola = Escola.objects.create(nome='Escola Externa')
         outra_disciplina = Disciplinas.objects.create(

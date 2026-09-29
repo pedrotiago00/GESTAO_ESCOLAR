@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
+from apps.cadastros.models import Disciplinas, Professores
+
 from .forms import CadastroForms, LoginForms
 from .models import Escola, Funcao, PerfilUsuario
 
@@ -185,3 +187,66 @@ class CadastroFormsTestCase(TestCase):
         perfil = PerfilUsuario.objects.get(usuario__username='novo_usuario')
         self.assertEqual(perfil.escola, self.escola)
         self.assertEqual(perfil.funcao, self.funcao)
+        self.assertFalse(Professores.objects.exists())
+
+    def test_cadastro_de_professor_cria_registro_na_mesma_escola(self):
+        self.funcao.nome = 'Professor'
+        self.funcao.save()
+        disciplina = Disciplinas.objects.create(
+            escola=self.escola,
+            codigo='MAT-01',
+            nome='Matemática',
+            area='Exatas',
+            carga_horaria=60,
+        )
+
+        response = self.client.post(reverse('cadastro'), {
+            'username': 'novo_professor',
+            'email': 'professor@escola.com',
+            'escola': self.escola.pk,
+            'funcao': self.funcao.pk,
+            'nome_completo': 'Ana Souza',
+            'matricula': 'P-1001',
+            'formacao': 'Licenciatura em Matemática',
+            'disciplina': disciplina.pk,
+            'carga_horaria': 40,
+            'password': 'senha123',
+            'password_confirm': 'senha123',
+        })
+
+        self.assertRedirects(response, reverse('login'))
+        professor = Professores.objects.get(matricula='P-1001')
+        self.assertEqual(professor.escola, self.escola)
+        self.assertEqual(professor.nome, 'Ana Souza')
+        self.assertEqual(professor.disciplina, disciplina)
+        self.assertEqual(PerfilUsuario.objects.get(usuario__username='novo_professor').funcao, self.funcao)
+
+    def test_cadastro_de_professor_rejeita_disciplina_de_outra_escola(self):
+        self.funcao.nome = 'Professor'
+        self.funcao.save()
+        outra_escola = Escola.objects.create(nome='Outra Escola')
+        disciplina = Disciplinas.objects.create(
+            escola=outra_escola,
+            codigo='HIS-01',
+            nome='História',
+            area='Humanas',
+            carga_horaria=60,
+        )
+
+        response = self.client.post(reverse('cadastro'), {
+            'username': 'professor_invalido',
+            'email': 'professor@outra.com',
+            'escola': self.escola.pk,
+            'funcao': self.funcao.pk,
+            'nome_completo': 'Carlos Lima',
+            'matricula': 'P-2001',
+            'formacao': 'Licenciatura em História',
+            'disciplina': disciplina.pk,
+            'carga_horaria': 40,
+            'password': 'senha123',
+            'password_confirm': 'senha123',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(get_user_model().objects.filter(username='professor_invalido').exists())
+        self.assertFalse(Professores.objects.exists())

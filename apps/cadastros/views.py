@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.db.models import Q
 
 from .models import Estudantes, Professores, Responsaveis, Turmas, Disciplinas
 from django.contrib.auth.decorators import login_required
@@ -76,13 +77,17 @@ def estudantes(request):
         return redirect('estudantes')
 
     escola = request.user.perfil.escola
-    estudantes = Estudantes.objects.select_related('turma', 'responsavel').filter(
+    estudantes_base = Estudantes.objects.select_related('turma', 'responsavel').filter(
         escola=escola,
         turma__escola=escola,
-    ).order_by('nome')
+    )
     turmas = Turmas.objects.filter(escola=escola).order_by('serie', 'turno')
     turma_id = request.GET.get('turma', '').strip()
+    busca = request.GET.get('q', '').strip()
+    status_selecionado = request.GET.get('status', '').strip()
     turma_selecionada = None
+    estudantes = estudantes_base
+
     if turma_id:
         if turma_id.isdecimal():
             turma_selecionada = turmas.filter(pk=turma_id).first()
@@ -91,12 +96,23 @@ def estudantes(request):
         else:
             estudantes = estudantes.none()
 
+    if busca:
+        estudantes = estudantes.filter(
+            Q(nome__icontains=busca) | Q(matricula__icontains=busca)
+        )
+    if status_selecionado in {'Ativo', 'Inativo', 'Transferido'}:
+        estudantes = estudantes.filter(status=status_selecionado)
+
     responsaveis = Responsaveis.objects.filter(escola=escola).order_by('nome')
     return render(request, 'cadastros/estudantes.html', {
         'estudantes': estudantes,
         'turmas': turmas,
         'turma_selecionada': turma_selecionada,
         'responsaveis': responsaveis,
+        'busca': busca,
+        'status_selecionado': status_selecionado,
+        'total_estudantes': estudantes_base.count(),
+        'total_estudantes_ativos': estudantes_base.filter(status='Ativo').count(),
     })
 
 @login_required

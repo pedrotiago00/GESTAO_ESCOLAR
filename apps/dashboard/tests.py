@@ -192,6 +192,16 @@ class DashboardViewTestCase(TestCase):
         self.assertEqual(response.context['proximos_exames'].count(), 1)
         self.assertEqual(response.context['estudantes_recentes'].count(), 2)
 
+    def test_card_da_turma_aponta_para_a_listagem_de_estudantes(self):
+        self.client.force_login(self.usuario)
+
+        response = self.client.get(reverse('dashboard'))
+
+        self.assertContains(
+            response,
+            f'href="/cadastros/estudantes/?turma={self.turma.pk}"',
+        )
+
     def test_dashboard_filtra_turmas_por_turno_busca_e_escola(self):
         turma_manha = Turmas.objects.create(
             escola=self.escola,

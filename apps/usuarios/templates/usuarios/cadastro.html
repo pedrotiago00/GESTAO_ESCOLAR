@@ -45,6 +45,33 @@
         <input type="email" id="email" name="email" placeholder="nome@caratinga.mg.gov.br" required autocomplete="email">
       </div>
 
+      <div class="field-row" id="dados-professor" hidden>
+        <div class="field-group">
+          <label for="id_nome_completo">Nome completo</label>
+          {{ form.nome_completo }}
+        </div>
+
+        <div class="field-group">
+          <label for="id_matricula">Matrícula</label>
+          {{ form.matricula }}
+        </div>
+
+        <div class="field-group">
+          <label for="id_formacao">Formação</label>
+          {{ form.formacao }}
+        </div>
+
+        <div class="field-group">
+          <label for="id_disciplina">Disciplina</label>
+          <div class="select-wrap">{{ form.disciplina }}</div>
+        </div>
+
+        <div class="field-group">
+          <label for="id_carga_horaria">Carga horária semanal</label>
+          {{ form.carga_horaria }}
+        </div>
+      </div>
+
       <div class="field-row">
         <div class="field-group">
           <label for="id_escola">Escola</label>
@@ -80,6 +107,23 @@
   </section>
 
 </main>
+
+<script>
+  const funcaoSelect = document.getElementById('id_funcao');
+  const dadosProfessor = document.getElementById('dados-professor');
+  const camposProfessor = dadosProfessor.querySelectorAll('input, select');
+
+  function atualizarCamposProfessor() {
+    const ehProfessor = funcaoSelect.selectedOptions[0]?.text.trim().toLowerCase() === 'professor';
+    dadosProfessor.hidden = !ehProfessor;
+    camposProfessor.forEach((campo) => {
+      campo.required = ehProfessor;
+    });
+  }
+
+  funcaoSelect.addEventListener('change', atualizarCamposProfessor);
+  atualizarCamposProfessor();
+</script>
 
 </body>
 </html>
